@@ -70,7 +70,7 @@ export default {
     return {
       isEpand: false,
       loading: false,
-      hasTip: false,
+      hasGot: false,
     };
   },
   watch: {
@@ -118,9 +118,10 @@ export default {
           apiKey = this.keyList[0]?.key || "";
         }
         this.setKey(apiKey);
-        if (!apiKey && !this.hasTip) {
-          this.onTip();
-          this.hasTip = true;
+        if (!apiKey && !this.hasGot) {
+          // this.onTip();
+          this.onCreate();
+          this.hasGot = true;
         }
       } catch (error) {
         console.log(error);
