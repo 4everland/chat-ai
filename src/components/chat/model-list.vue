@@ -41,7 +41,7 @@
             transition-show="jump-down"
             transition-hide="jump-up"
           >
-            <div class="pa-3 pb-0 tiny-input">
+            <div class="pa-3 pb-0 tiny-input pos-s top-0 bg-white z-10">
               <q-input
                 v-model="searchKey"
                 outlined
