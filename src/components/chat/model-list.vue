@@ -118,7 +118,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 import { mapState } from "vuex";
 
 export default {
@@ -220,10 +219,13 @@ export default {
           return console.log("models", this.aiModels.length);
       }
       try {
+        console.log("get models");
         this.loadingModel = true;
-        const { data } = await Axios.get("https://openrouter.ai/api/v1/models");
+        const { data } = await this.$axios.get(
+          "https://ai.api.4everland.org/api/v1/models"
+        );
         const rows = data.data.map((it) => {
-          if (it.id == "openrouter/auto") it.id = "4ever/auto";
+          // if (it.id == "openrouter/auto") it.id = "4ever/auto";
           delete it.description;
           return it;
         });

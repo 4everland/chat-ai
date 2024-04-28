@@ -1,6 +1,7 @@
 import { boot } from "quasar/wrappers";
 import "../utils/extend";
 import api from "../utils/api";
+import axios from "axios";
 import { setState, setStore } from "../store";
 import { EventBus, copyToClipboard } from "quasar";
 import Components from "../components";
@@ -12,6 +13,7 @@ export default boot(({ app }) => {
   global.$inDev = !/dashboard/.test(VITE_HOME_URL);
   global.$inLocal = /localhost/.test(location.host);
   global.$http = api;
+  global.$axios = axios;
 
   global.$setState = setState;
   global.$setStore = setStore;
