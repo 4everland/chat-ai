@@ -183,7 +183,7 @@ export default {
         if (!isIn) model = "";
       }
       if (!this.selected.length && !model) {
-        model = "4ever/auto";
+        model = "openai/gpt-3.5-turbo"; // "4ever/auto";
       }
       if (model) {
         if (!this.selected.includes(model)) {

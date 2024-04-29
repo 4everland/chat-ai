@@ -69,7 +69,7 @@ export default {
           con_id: id,
           id: this.getMsgId(row.id),
           model: row.id,
-          createAt: Date.now(),
+          createAt: Date.now() + 10,
         });
       }
       const chatLogs = [...this.chatLogs, ...list];
