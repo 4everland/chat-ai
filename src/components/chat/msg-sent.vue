@@ -63,6 +63,7 @@ export default {
   computed: {
     ...mapState({
       userInfo: (s) => s.userInfo,
+      apiKey: (s) => s.apiKey,
     }),
   },
   data() {
@@ -91,7 +92,7 @@ export default {
       const msg = `fetch("${VITE_AI_URL}/chat/completions", {
   method: "POST",
   headers: {
-    "Authorization": ,
+    "Authorization": "Bearer ${this.apiKey}",
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
