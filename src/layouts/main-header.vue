@@ -2,13 +2,13 @@
   <div class="al-c max-wrap py-3">
     <a href="/" class="mr-auto">
       <img
-        src="https://dashboard.4everland.org/img/svg/logo.svg"
+        src="https://dashboard.4everland.org/img/svg/logo-m.svg"
         style="height: 24px"
       />
     </a>
-    <q-btn href="https://docs.4everland.org/" target="_blank" flat dense
+    <!-- <q-btn href="https://docs.4everland.org/" target="_blank" flat dense
       >Docs</q-btn
-    >
+    > -->
     <q-btn
       class="ml-4 mr-4"
       href="https://dashboard.4everland.org/"
@@ -20,7 +20,7 @@
     <q-btn v-if="userInfo.uid" flat class="bg-white">
       <jazz-icon :hash="userInfo.uid" :size="18" />
       <span class="ml-2">{{ userInfo.uname }}</span>
-      <img src="/img/ic-down.svg" width="14" class="ml-2" />
+      <!-- <img src="/img/ic-down.svg" width="14" class="ml-2" /> -->
       <q-menu
         transition-show="jump-down"
         transition-hide="jump-up"
