@@ -63,12 +63,7 @@ export default {
         this.streaming = true;
         this.tokenNum = 0;
         this.beginAt = Date.now();
-        const msgs = this.text.map((content) => {
-          return {
-            role: "user",
-            content,
-          };
-        });
+        const msgs = this.logs;
         const body = this.getPayload(msgs);
         const source = new window.SSE(VITE_AI_URL + "/chat/completions", body);
         source.addEventListener("message", (e) => {

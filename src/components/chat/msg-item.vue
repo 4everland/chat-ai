@@ -127,7 +127,7 @@ export default {
     rowId: String,
     info: Object,
     modelId: String,
-    text: Array,
+    logs: Array,
   },
   computed: {
     ...mapState({

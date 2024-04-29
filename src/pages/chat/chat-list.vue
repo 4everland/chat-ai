@@ -5,7 +5,7 @@
         v-if="it.model"
         :info="it"
         :modelId="it.model"
-        :text="getText(it)"
+        :logs="getLogs(it)"
       />
       <msg-sent v-else :rowId="it.id" :modelId="it.model" :text="it.content" />
     </template>
@@ -84,16 +84,22 @@ export default {
       });
       this.$bus.emit("chat-to-btm", true);
     },
-    getText(it) {
-      if (it.model) {
-        const msgRow = this.chatLogs.find((log) => log.id == it.con_id);
-        if (msgRow) return [msgRow.content];
-        return this.chatLogs
-          .filter((log) => !log.model && log.createAt < it.createAt)
-          .slice(-4)
-          .map((it) => it.content);
-      }
-      return it.content;
+    getLogs(it) {
+      // const msgRow = this.chatLogs.find((log) => log.id == it.con_id);
+      // if (msgRow) return [msgRow.content];
+      return this.chatLogs
+        .filter((log) => {
+          return (
+            (!log.model || it.model == log.model) && log.createAt < it.createAt
+          );
+        })
+        .slice(-6)
+        .map((it) => {
+          return {
+            role: !it.model ? "user" : "assistant",
+            content: it.content,
+          };
+        });
     },
   },
 };
