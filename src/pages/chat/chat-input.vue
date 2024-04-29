@@ -37,6 +37,7 @@
           :color="trimVal ? 'primary' : 'info'"
           dense
           :disable="!trimVal"
+          @click="onEnter"
         >
           <img
             src="/img/send.svg"
