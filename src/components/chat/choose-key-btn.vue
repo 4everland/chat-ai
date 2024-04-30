@@ -52,7 +52,7 @@
             clickable
             v-close-popup
             v-if="!keyList.length"
-            @click="goApiManage"
+            @click="onCreate"
           >
             <q-item-section> Create API Key </q-item-section>
           </q-item>
