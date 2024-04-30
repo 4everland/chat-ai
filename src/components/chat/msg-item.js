@@ -17,7 +17,7 @@ export default {
     onErr(msg) {
       if (msg == "Key not found.") {
         const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
-        msg = `API Key required, please create it in [Dashboard](${url})`;
+        msg = `Correct API Key required, get it in [Dashboard](${url})`;
       }
       if (msg == "Balance not enough.") {
         const url = this.$getHomeUrl("/billing/deposit");
