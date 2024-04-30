@@ -96,7 +96,7 @@ export default {
             (!log.model || it.model == log.model) && log.createAt < it.createAt
           );
         })
-        .slice(-6)
+        .slice(-4)
         .map((it) => {
           return {
             role: !it.model ? "user" : "assistant",
