@@ -20,7 +20,7 @@
     <q-btn v-if="userInfo.uid" flat class="bg-white">
       <jazz-icon :hash="userInfo.uid" :size="18" />
       <span class="ml-2">{{ userInfo.uname }}</span>
-      <!-- <img src="/img/ic-down.svg" width="14" class="ml-2" /> -->
+      <img src="/img/ic-down.svg" width="14" class="ml-2" />
       <q-menu
         transition-show="jump-down"
         transition-hide="jump-up"
@@ -77,6 +77,9 @@ export default {
       this.$setStore({
         loginData: {},
         userInfo: {},
+        apiKey: "",
+        keyList: [],
+        importKey: null,
       });
     },
     async getUserInfo() {

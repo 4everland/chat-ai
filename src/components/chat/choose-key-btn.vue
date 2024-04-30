@@ -1,54 +1,65 @@
 <template>
-  <q-btn
-    flat
-    dense
-    class="bg-white bd-1"
-    :loading="loading"
-    @click="isEpand = !isEpand"
-  >
-    <span class="fz-13 mr-auto px-2 ta-l lh-15" style="min-width: 120px">{{
-      keyName
-    }}</span>
-    <img
-      src="/img/ic-down.svg"
-      width="14"
-      class="icon-down trans-200 mr-1"
-      :class="[
-        {
-          'up-down': isEpand,
-        },
-      ]"
-    />
-    <q-menu
-      transition-show="jump-down"
-      transition-hide="jump-up"
-      @before-hide="isEpand = false"
+  <div class="al-c">
+    <q-btn
+      icon="edit"
+      dense
+      flat
+      size="sm"
+      class="mr-1"
+      v-if="importKey && importKey.value == apiKey"
+      @click="$bus.emit('show-import')"
+    ></q-btn>
+    <q-btn
+      flat
+      dense
+      class="bg-white bd-1"
+      :loading="loading"
+      @click="isEpand = !isEpand"
     >
-      <div v-if="apiKey" class="pa-3 pb-1 fz-12 gray">API Key</div>
-      <q-list dense separator style="min-width: 160px">
-        <q-item
-          clickable
-          v-close-popup
-          v-for="it in keyList"
-          :key="it.id"
-          :active="it.key == apiKey"
-          @click="setKey(it.key)"
-        >
-          <q-item-section>
-            <span>{{ it.name }}</span>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          v-close-popup
-          v-if="!keyList.length"
-          @click="onCreate"
-        >
-          <q-item-section> Create API Key </q-item-section>
-        </q-item>
-      </q-list>
-    </q-menu>
-  </q-btn>
+      <span class="fz-13 mr-auto px-2 ta-l lh-15" style="min-width: 120px">{{
+        keyName
+      }}</span>
+      <img
+        src="/img/ic-down.svg"
+        width="14"
+        class="icon-down trans-200 mr-1"
+        :class="[
+          {
+            'up-down': isEpand,
+          },
+        ]"
+      />
+      <q-menu
+        transition-show="jump-down"
+        transition-hide="jump-up"
+        @before-hide="isEpand = false"
+      >
+        <div v-if="apiKey" class="pa-3 pb-1 fz-12 gray">API Key</div>
+        <q-list dense style="min-width: 160px">
+          <q-item
+            clickable
+            v-close-popup
+            v-for="it in myKeyList"
+            :key="it.id"
+            :active="it.key == apiKey"
+            @click="setKey(it.key)"
+          >
+            <q-item-section>
+              <span>{{ it.name }}</span>
+            </q-item-section>
+          </q-item>
+          <q-item
+            clickable
+            v-close-popup
+            v-if="!keyList.length"
+            @click="goApiManage"
+          >
+            <q-item-section> Create API Key </q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
+  </div>
 </template>
 
 <script>
@@ -62,12 +73,19 @@ export default {
       apiKey: (s) => s.apiKey,
       importKey: (s) => s.importKey,
     }),
-    keyName() {
+    myKeyList() {
+      const list = [...this.keyList];
       if (this.importKey) {
         const { name, value } = this.importKey;
-        if (value == this.apiKey) return name;
+        list.unshift({
+          name: name + ` - (import)`,
+          key: value,
+        });
       }
-      const item = this.keyList.find((it) => it.key == this.apiKey);
+      return list;
+    },
+    keyName() {
+      const item = this.myKeyList.find((it) => it.key == this.apiKey);
       if (item) return item.name;
       return "Choose Key";
     },
@@ -96,11 +114,14 @@ export default {
         apiKey,
       });
     },
+    goApiManage() {
+      window.open(this.$getHomeUrl("/ai-rpc?tab=Keys"));
+    },
     async onCreate() {
       try {
         this.loading = true;
         await this.$http.post("/rpc/ai/manager/keys", {
-          name: "auto-by-chat",
+          name: "autoGen",
           limit: "",
         });
         await this.getList();
@@ -118,17 +139,17 @@ export default {
         });
         let apiKey = this.apiKey;
         if (apiKey) {
-          const isIn = this.keyList.find((it) => it.key == apiKey);
+          const isIn = this.myKeyList.find((it) => it.key == apiKey);
           if (!isIn) apiKey = "";
         }
         if (!apiKey) {
-          apiKey = this.keyList[0]?.key || "";
+          apiKey = this.myKeyList[0]?.key || "";
         }
         this.setKey(apiKey);
-        if (!apiKey && !this.hasGot) {
+        if (!this.keyList.length && !this.hasGot) {
           // this.onTip();
-          this.onCreate();
           this.hasGot = true;
+          this.onCreate();
         }
       } catch (error) {
         console.log(error);
@@ -139,14 +160,10 @@ export default {
         await this.$confirm("API Key required", {
           okLabel: "Create",
         });
-        // this.goApiManage();
         await this.onCreate();
       } catch (error) {
         console.log(error);
       }
-    },
-    goApiManage() {
-      window.open(this.$getHomeUrl("/ai-rpc?tab=Keys"));
     },
   },
 };

@@ -10,8 +10,11 @@
         dense
       ></q-input>
     </div>
-    <div class="ta-r mt-6">
-      <q-btn flat class="bd-1" @click="showPop = false">Cancel</q-btn>
+    <div class="al-c mt-6">
+      <q-btn flat color="red" dense @click="onDel" v-if="importKey"
+        >Delete</q-btn
+      >
+      <q-btn flat class="bd-1 ml-auto" @click="showPop = false">Cancel</q-btn>
       <q-btn class="ml-3" color="primary" @click="onSave">Save</q-btn>
     </div>
   </qs-popup>
@@ -20,9 +23,14 @@
 <script>
 import { mapState } from "vuex";
 
+const initForm = {
+  name: "",
+  value: "",
+};
 export default {
   computed: {
     ...mapState({
+      apiKey: (s) => s.apiKey,
       importKey: (s) => s.importKey,
     }),
   },
@@ -30,15 +38,18 @@ export default {
     return {
       showPop: false,
       form: {
-        name: "",
-        value: "",
+        ...initForm,
       },
     };
   },
   watch: {
     showPop(val) {
-      if (val && this.importKey) {
-        this.form = { ...this.importKey };
+      if (val) {
+        this.form = this.importKey
+          ? { ...this.importKey }
+          : {
+              ...initForm,
+            };
       }
     },
   },
@@ -48,6 +59,14 @@ export default {
     });
   },
   methods: {
+    onDel() {
+      const apiKey = this.apiKey == this.importKey.value ? "" : this.apiKey;
+      this.$setStore({
+        importKey: null,
+        apiKey,
+      });
+      this.showPop = false;
+    },
     onSave() {
       let msg = "";
       const { name, value } = this.form;
