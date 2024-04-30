@@ -7,7 +7,7 @@
       size="sm"
       class="mr-1"
       v-if="importKey && importKey.value == apiKey"
-      @click="$bus.emit('show-import')"
+      @click="showImport"
     ></q-btn>
     <q-btn
       flat
@@ -56,6 +56,9 @@
           >
             <q-item-section> Create API Key </q-item-section>
           </q-item>
+          <q-item clickable v-close-popup v-if="!importKey" @click="showImport">
+            <q-item-section> Import API Key </q-item-section>
+          </q-item>
         </q-list>
       </q-menu>
     </q-btn>
@@ -77,7 +80,7 @@ export default {
       const list = [...this.keyList];
       if (this.importKey) {
         const { name, value } = this.importKey;
-        list.unshift({
+        list.push({
           name: name + ` - (import)`,
           key: value,
         });
@@ -101,6 +104,12 @@ export default {
     isEpand(val) {
       if (val) this.getList();
     },
+    importKey(val) {
+      if (!val) {
+        this.hasGot = false;
+        this.getList();
+      }
+    },
   },
   created() {
     this.getList();
@@ -113,6 +122,9 @@ export default {
       this.$setStore({
         apiKey,
       });
+    },
+    showImport() {
+      this.$bus.emit("show-import");
     },
     goApiManage() {
       window.open(this.$getHomeUrl("/ai-rpc?tab=Keys"));
