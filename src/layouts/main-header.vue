@@ -64,17 +64,6 @@ export default {
   created() {
     if (this.token) {
       this.getUserInfo();
-    } else {
-      this.$confirm("Sign in and start chatting", {
-        title: "Notice",
-        ok: {
-          label: "Sign In",
-          color: "primary",
-          flat: false,
-        },
-      }).then(() => {
-        this.onLogin();
-      });
     }
   },
   methods: {

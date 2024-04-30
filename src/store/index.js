@@ -9,6 +9,7 @@ const storInit = {
   chatLogs: [],
   keyList: [],
   apiKey: "",
+  importKey: null,
 };
 const storState = {
   ...storInit,

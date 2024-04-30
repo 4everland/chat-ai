@@ -1,6 +1,6 @@
 <template>
-  <q-dialog v-model="showPop" position="bottom">
-    <q-card class="full-width" style="max-width: 600px; min-width: 300px">
+  <q-dialog v-model="showPop">
+    <q-card class="full-width" style="max-width: 500px; min-width: 300px">
       <q-card-section class="pos-s top-0 bg-white z-100 al-c">
         <slot name="title">
           <b class="fz-18">{{ title }}</b>

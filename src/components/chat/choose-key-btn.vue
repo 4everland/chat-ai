@@ -57,10 +57,16 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
+      token: (s) => s.loginData.token,
       keyList: (s) => s.keyList,
       apiKey: (s) => s.apiKey,
+      importKey: (s) => s.importKey,
     }),
     keyName() {
+      if (this.importKey) {
+        const { name, value } = this.importKey;
+        if (value == this.apiKey) return name;
+      }
       const item = this.keyList.find((it) => it.key == this.apiKey);
       if (item) return item.name;
       return "Choose Key";
@@ -104,6 +110,7 @@ export default {
       this.loading = false;
     },
     async getList() {
+      if (!this.token) return;
       try {
         const { data } = await this.$http.get("/rpc/ai/manager/keys");
         this.$setStore({

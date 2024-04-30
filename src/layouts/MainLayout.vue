@@ -3,13 +3,16 @@
 
 <script setup>
 import MainHeader from "./main-header.vue";
+import MainLogin from "./main-login.vue";
 </script>
 
 <template>
   <div class="px-4">
     <main-header />
+
+    <main-login v-if="!token && !apiKey" />
     <q-layout
-      v-if="token"
+      v-else
       view="lHh Lpr lFf"
       class="bd-1 bdrs-8 bg-white max-wrap"
       container
@@ -48,6 +51,8 @@ import MainHeader from "./main-header.vue";
       </q-page-container>
     </q-layout>
   </div>
+
+  <import-key-pop />
 </template>
 
 <script>
@@ -62,6 +67,7 @@ export default {
   computed: {
     ...mapState({
       token: (s) => s.loginData.token,
+      apiKey: (s) => s.apiKey,
       configModelId: (s) => s.configModelId,
     }),
   },
