@@ -48,6 +48,9 @@ export default {
       this.onSendMsg(msg);
     });
   },
+  unmounted() {
+    this.$bus.off("send-msg");
+  },
   methods: {
     getMsgId(mm = "") {
       const rand = (Math.random() + "").substring(0, 4);
