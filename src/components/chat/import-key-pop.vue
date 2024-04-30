@@ -72,6 +72,7 @@ export default {
       const { name, value } = this.form;
       if (!name) msg = "Key name is required";
       else if (!value) msg = "API Key is required";
+      else if (!/^\w{32}$/.test(value)) msg = "Invalid API Key";
       if (msg) {
         return this.$toast(msg);
       }
