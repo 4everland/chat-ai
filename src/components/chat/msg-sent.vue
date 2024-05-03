@@ -19,7 +19,7 @@
             @click="onRefresh"
           ></q-btn>
         </div>
-        <div class="msg-sent-con bg-pink1 px-3 py-2 bdrs-8 fz-16">
+        <div class="msg-sent-con bg-pink1 px-3 py-2 bdrs-8 fz-16 ta-l">
           <div>{{ text }}</div>
         </div>
       </div>
