@@ -172,6 +172,9 @@ export default {
   },
   created() {
     this.onInit();
+    this.$bus.on("select-model", (id) => {
+      this.onSelect(id);
+    });
   },
   methods: {
     async onInit() {

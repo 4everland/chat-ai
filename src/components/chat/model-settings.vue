@@ -36,6 +36,7 @@
               dense
               autogrow
               maxlength="1500"
+              @keyup="setConfig"
             ></q-input>
           </div>
 
@@ -81,9 +82,14 @@
         </div>
 
         <div class="al-c mt-4">
-          <q-btn flat class="bg-white bd-1 flex-1" @click="applyToAll"
-            >Apply to All</q-btn
+          <q-btn
+            flat
+            class="bg-white bd-1 flex-1"
+            :disable="isAll"
+            @click="applyToAll"
           >
+            <span class="fz-13">{{ isAll ? "Applied" : "Apply" }} to All</span>
+          </q-btn>
           <q-btn
             flat
             class="bg-white bd-1 flex-1 ml-3"
@@ -91,6 +97,11 @@
             @click="onReset"
           >
             <span class="fz-13">Reset to Default</span>
+          </q-btn>
+        </div>
+        <div class="mt-4">
+          <q-btn color="red" flat class="w100p bd-1 bg-white" @click="onRemove">
+            Remove
           </q-btn>
         </div>
       </div>
@@ -104,6 +115,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
+      configMap: (s) => s.configMap,
       aiModels: (s) => s.aiModels,
       configModelId: (s) => s.configModelId,
     }),
@@ -120,6 +132,18 @@ export default {
       }
       return change;
     },
+    modelConfig() {
+      return this.configMap[this.configModelId] || this.configMap.all;
+    },
+    isAll() {
+      const { all } = this.configMap;
+      if (!all) return false;
+      if (Object.keys(this.configMap).length > 1) return false;
+      for (const key in all) {
+        if (all[key] != this.curForm[key]) return false;
+      }
+      return true;
+    },
   },
   data() {
     return {
@@ -131,6 +155,7 @@ export default {
           label: "Description (system propmt)",
           def: "",
           maxlen: 1000,
+          name: "prompt",
         },
         {
           tip: `This sets the upper limit for the number of tokens the model can generate in response. It won't produce more than this limit. The maximum value is the context length minus the prompt length.`,
@@ -164,13 +189,23 @@ export default {
       inpForm: {},
     };
   },
+  watch: {
+    configModelId(val) {
+      if (val) this.onInit();
+    },
+  },
   created() {
+    const initForm = {};
     for (const it of this.keyList) {
-      this.initForm[it.name] = it.def;
+      initForm[it.name] = it.def;
     }
-    this.onReset();
+    this.initForm = initForm;
+    this.onInit();
   },
   methods: {
+    onInit() {
+      this.onSetForm(this.modelConfig || this.initForm);
+    },
     applyToAll() {
       this.$setStore({
         configMap: {
@@ -181,8 +216,12 @@ export default {
       });
     },
     onReset() {
-      this.curForm = { ...this.initForm };
-      this.inpForm = { ...this.initForm };
+      this.onSetForm(this.initForm);
+      this.setConfig();
+    },
+    onSetForm(form) {
+      this.curForm = { ...form };
+      this.inpForm = { ...form };
     },
     onBlur(it) {
       if (this.inpForm[it.name] === "") {
@@ -209,14 +248,28 @@ export default {
         this.curForm[name] = val;
       }
       // console.log(name, val, fval);
+      this.setConfig();
     },
     onSlide(it, e) {
       this.inpForm[it.name] = e;
+      this.setConfig();
+    },
+    setConfig() {
+      const configMap = {
+        ...this.configMap,
+        [this.configModelId]: { ...this.curForm },
+      };
+      // console.log(configMap);
+      this.$setStore({ configMap });
     },
     onBack() {
       this.$setState({
         configModelId: null,
       });
+    },
+    onRemove() {
+      this.$bus.emit("select-model", this.configModelId);
+      this.onBack();
     },
   },
 };

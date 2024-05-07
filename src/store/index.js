@@ -10,6 +10,7 @@ const storInit = {
   keyList: [],
   apiKey: "",
   importKey: null,
+  configMap: {},
 };
 const storState = {
   ...storInit,
@@ -33,7 +34,6 @@ const store = createStore({
     checkModelIds: [],
     jobModelIds: [],
     configModelId: null, // for settings
-    configMap: {},
   },
   getters: {},
   mutations: {
