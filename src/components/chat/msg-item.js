@@ -63,8 +63,7 @@ export default {
         this.streaming = true;
         this.tokenNum = 0;
         this.beginAt = Date.now();
-        const msgs = this.logs;
-        const body = this.getPayload(msgs);
+        const body = this.getPayload();
         const source = new window.SSE(VITE_AI_URL + "/chat/completions", body);
         source.addEventListener("message", (e) => {
           try {
@@ -114,12 +113,23 @@ export default {
         this.onErr(error.message);
       }
     },
-    getPayload(messages = [], opt = {}) {
+    getMsgs() {
+      const { prompt, chatMemory = 4 } = this.curConfig || {};
+      let msgs = this.logs.slice(-chatMemory);
+      if (prompt) {
+        msgs.unshift({
+          role: "system",
+          content: prompt,
+        });
+      }
+      return msgs;
+    },
+    getPayload() {
       const body = {
         model: this.modelId,
-        messages,
+        messages: this.getMsgs(),
         stream: true,
-        ...opt,
+        ...this.configBody,
       };
       return {
         headers: {

@@ -132,10 +132,27 @@ export default {
   computed: {
     ...mapState({
       aiModels: (s) => s.aiModels,
+      configKeys: (s) => s.configKeys,
+      configMap: (s) => s.configMap,
       apiKey: (s) => s.apiKey,
     }),
     modelRow() {
       return this.aiModels.find((it) => it.id == this.modelId);
+    },
+    curConfig() {
+      return this.configMap[this.modelId] || this.configMap.all;
+    },
+    configBody() {
+      if (!this.curConfig) return;
+      const body = {};
+      for (const key in this.curConfig) {
+        const item = this.configKeys.find((it) => it.name == key);
+        if (!item || !item.is_body) continue;
+        const val = this.curConfig[key];
+        if (item.def == val) continue;
+        body[key] = val;
+      }
+      return body;
     },
     mdCon() {
       return this.resMsg || this.info.content;

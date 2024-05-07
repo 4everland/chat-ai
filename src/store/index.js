@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import configKeys from "./config-keys";
 
 const SET_DATA = "setData";
 
@@ -34,6 +35,7 @@ const store = createStore({
     checkModelIds: [],
     jobModelIds: [],
     configModelId: null, // for settings
+    configKeys,
   },
   getters: {},
   mutations: {

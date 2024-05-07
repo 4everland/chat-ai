@@ -1,0 +1,36 @@
+export default [
+  {
+    label: "Description (system propmt)",
+    def: "",
+    maxlen: 1000,
+    name: "prompt",
+  },
+  {
+    tip: `This sets the upper limit for the number of tokens the model can generate in response. It won't produce more than this limit. The maximum value is the context length minus the prompt length.`,
+    label: "Max Tokens",
+    min: 0,
+    max: 128000,
+    def: 0,
+    name: "max_tokens",
+    step: 100,
+    is_body: true,
+  },
+  {
+    tip: `Specifies the maximum number of chat message to be included in each request.`,
+    label: "Chat Memory",
+    min: 2,
+    max: 12,
+    name: "chatMemory",
+    def: 4,
+  },
+  {
+    tip: `This setting influences the variety in the model's responses. Lower values lead to more predictable and typical responses, while higher values encourage more diverse and less common responses. At 0, the model always gives the same response for a given input.`,
+    label: "Temperature",
+    min: 0,
+    max: 2,
+    name: "temperature",
+    def: 1.0,
+    step: 0.01,
+    is_body: true,
+  },
+];

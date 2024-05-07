@@ -26,7 +26,7 @@
       }"
     >
       <div class="pa-4">
-        <div class="mb-4" v-for="it in keyList" :key="it.name">
+        <div class="mb-4" v-for="it in configKeys" :key="it.name">
           <div v-if="!it.max">
             <div class="label-1">{{ it.label }}</div>
             <q-input
@@ -115,6 +115,7 @@ import { mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
+      configKeys: (s) => s.configKeys,
       configMap: (s) => s.configMap,
       aiModels: (s) => s.aiModels,
       configModelId: (s) => s.configModelId,
@@ -150,40 +151,6 @@ export default {
       checked: false,
       standard: 10,
       val: "10",
-      keyList: [
-        {
-          label: "Description (system propmt)",
-          def: "",
-          maxlen: 1000,
-          name: "prompt",
-        },
-        {
-          tip: `This sets the upper limit for the number of tokens the model can generate in response. It won't produce more than this limit. The maximum value is the context length minus the prompt length.`,
-          label: "Max Tokens",
-          min: 0,
-          max: 128000,
-          def: 0,
-          name: "maxToken",
-          step: 100,
-        },
-        {
-          tip: `Specifies the maximum number of chat message to be included in each request.`,
-          label: "Chat Memory",
-          min: 2,
-          max: 12,
-          name: "chatMemory",
-          def: 4,
-        },
-        {
-          tip: `This setting influences the variety in the model's responses. Lower values lead to more predictable and typical responses, while higher values encourage more diverse and less common responses. At 0, the model always gives the same response for a given input.`,
-          label: "Temperature",
-          min: 0,
-          max: 2,
-          name: "temperature",
-          def: 1.0,
-          step: 0.01,
-        },
-      ],
       initForm: {},
       curForm: {},
       inpForm: {},
@@ -196,7 +163,7 @@ export default {
   },
   created() {
     const initForm = {};
-    for (const it of this.keyList) {
+    for (const it of this.configKeys) {
       initForm[it.name] = it.def;
     }
     this.initForm = initForm;
