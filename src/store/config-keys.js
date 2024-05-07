@@ -21,7 +21,7 @@ export default [
     min: 2,
     max: 12,
     name: "chatMemory",
-    def: 4,
+    def: 3,
   },
   {
     tip: `This setting influences the variety in the model's responses. Lower values lead to more predictable and typical responses, while higher values encourage more diverse and less common responses. At 0, the model always gives the same response for a given input.`,

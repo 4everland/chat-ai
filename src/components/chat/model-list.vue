@@ -104,7 +104,7 @@
           >
             <q-toggle v-model="checked" :val="it.id" size="sm" />
             <img
-              v-show="$inLocal"
+              v-show="$inDev"
               src="/img/settings.svg"
               width="20"
               class="hover-1 mr-2"

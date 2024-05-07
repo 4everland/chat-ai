@@ -114,7 +114,7 @@ export default {
       }
     },
     getMsgs() {
-      const { prompt, chatMemory = 4 } = this.curConfig || {};
+      const { prompt, chatMemory = 3 } = this.curConfig || {};
       let msgs = this.logs.slice(-chatMemory);
       if (prompt) {
         msgs.unshift({
