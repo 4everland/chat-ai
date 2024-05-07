@@ -33,6 +33,7 @@ const store = createStore({
     checkModelIds: [],
     jobModelIds: [],
     configModelId: null, // for settings
+    configMap: {},
   },
   getters: {},
   mutations: {
