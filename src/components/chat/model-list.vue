@@ -75,9 +75,15 @@
           </q-menu>
         </q-btn>
 
-        <!-- <q-btn class="ml-3 bg-white bd-1" dense flat>
+        <q-btn
+          v-show="!!selected.length"
+          class="ml-3 bg-white bd-1"
+          dense
+          flat
+          @click="onClear"
+        >
           <img src="/img/trash.svg" width="22" class="px-2p" />
-        </q-btn> -->
+        </q-btn>
       </div>
     </div>
     <q-scroll-area
@@ -200,6 +206,10 @@ export default {
       this.$setState({
         configModelId: it.id,
       });
+    },
+    onClear() {
+      this.selected = [];
+      this.checked = [];
     },
     onSelect(id) {
       const selected = [...this.selected];
