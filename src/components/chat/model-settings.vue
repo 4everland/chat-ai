@@ -26,7 +26,7 @@
       }"
     >
       <div class="pa-4">
-        <div class="mb-4" v-for="it in configKeys" :key="it.name">
+        <div class="mb-2" v-for="it in configKeys" :key="it.name">
           <div v-if="!it.max">
             <div class="label-1">{{ it.label }}</div>
             <q-input
@@ -64,7 +64,7 @@
                 dense
                 track-size="3px"
                 thumb-size="12px"
-                thumb-color1="white"
+                thumb-color="white"
                 @update:model-value="onSlide(it, $event)"
               />
             </div>
@@ -171,7 +171,12 @@ export default {
   },
   methods: {
     onInit() {
-      this.onSetForm(this.modelConfig || this.initForm);
+      if (this.modelConfig && this.modelConfig.top_a === undefined) {
+        this.onReset();
+        console.log("auto_reset");
+      } else {
+        this.onSetForm(this.modelConfig || this.initForm);
+      }
     },
     applyToAll() {
       this.$setStore({
