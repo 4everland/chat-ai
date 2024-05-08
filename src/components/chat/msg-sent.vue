@@ -20,7 +20,7 @@
           ></q-btn>
         </div>
         <div class="msg-sent-con bg-pink1 px-3 py-2 bdrs-8 fz-16 ta-l">
-          <div>{{ text }}</div>
+          <div v-html="html"></div>
         </div>
       </div>
       <div class="mt-1 gray hover-show al-c f-end">
@@ -65,6 +65,9 @@ export default {
       userInfo: (s) => s.userInfo,
       apiKey: (s) => s.apiKey,
     }),
+    html() {
+      return this.text.replace(/\n/g, "<br>");
+    },
   },
   data() {
     return {
