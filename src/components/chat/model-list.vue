@@ -103,8 +103,8 @@
             class="y-center right-0 mr-3 pr-10 bg-white bdrs-6 al-c hover-show"
           >
             <q-toggle v-model="checked" :val="it.id" size="sm" />
+            <!-- v-show="$inDev" -->
             <img
-              v-show="$inDev"
               src="/img/settings.svg"
               width="20"
               class="hover-1 mr-2"
