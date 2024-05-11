@@ -1,5 +1,5 @@
 <template>
-  <qs-popup v-model="showPop" hide-close title="Import API Key">
+  <qs-popup v-model="showPop" hide-close title="4EVERLAND AI RPC key">
     <div class="mt-2">
       <q-input v-model="form.name" label="Key Name" outlined dense></q-input>
       <q-input
