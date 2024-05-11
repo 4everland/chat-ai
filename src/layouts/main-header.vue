@@ -40,8 +40,8 @@
         </q-list>
       </q-menu>
     </q-btn>
-    <q-btn v-else class="bg-white" :loading="loadingUser" @click="onLogin">
-      Sign In
+    <q-btn flat v-else class="bg-white" :loading="loadingUser" @click="onLogin">
+      Sign in
     </q-btn>
   </div>
 </template>

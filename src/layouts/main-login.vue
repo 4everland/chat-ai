@@ -1,23 +1,45 @@
+<style lang="scss">
+.btn-al-left {
+  .q-btn__content {
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+</style>
+
 <template>
-  <div class="pa-6"></div>
+  <div style="height: 20vh"></div>
   <div class="al-c f-center">
-    <q-card class="full-width m-auto" style="max-width: 600px">
-      <q-card-section class="ta-c py-9">
-        <q-btn color="primary" rounded style="width: 220px" @click="onLogin"
-          >Sign In</q-btn
-        >
-        <div class="py-6">OR</div>
-        <q-btn
-          color="primary"
-          outline
-          rounded
-          style="width: 220px"
-          @click="$bus.emit('show-import')"
-          >Import A 4EVER AI Key</q-btn
-        >
-        <div class="mt-8 fz-15">To start your Al Journey!</div>
-      </q-card-section>
-    </q-card>
+    <div class="bg-white bd-1 pa-6 w100p bdrs-9" style="max-width: 500px">
+      <div class="fz-20 fw-b mb-5">Sign in to 4EVERLAND AI bot</div>
+      <q-btn
+        color="primary"
+        outline
+        size="lg"
+        class="w100p btn-al-left"
+        style="background: #f2e8fd !important"
+        @click="onLogin"
+      >
+        <div class="al-c ml-3">
+          <img src="/img/sign-in.svg" width="24" />
+          <span class="ml-3 fz-18">Sign in</span>
+        </div>
+      </q-btn>
+      <div class="pt-5 pb-2 gray fz-17">or</div>
+      <q-btn
+        outline
+        flat
+        size="lg"
+        class="w100p btn-al-left bd-1"
+        @click="$bus.emit('show-import')"
+      >
+        <div class="al-c ml-3">
+          <img src="/img/import-key.svg" width="24" />
+          <span class="ml-3 fz-18">Import A 4EVERLAND AI Key</span>
+        </div>
+      </q-btn>
+      <div class="pa-1"></div>
+    </div>
   </div>
 </template>
 
