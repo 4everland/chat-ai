@@ -36,7 +36,6 @@ let listRef;
 export default {
   data() {
     return {
-      apiKey: "",
       keyOpts: [
         {
           label: "test",

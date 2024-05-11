@@ -25,6 +25,7 @@ export default {
       aiModels: (s) => s.aiModels,
       checkModelIds: (s) => s.checkModelIds,
       chatLogs: (s) => s.chatLogs,
+      apiKey: (s) => s.apiKey,
     }),
     checkModels() {
       return this.checkModelIds
@@ -42,7 +43,26 @@ export default {
       });
     },
   },
-  watch: {},
+  watch: {
+    chatLogs(val) {
+      if (this.inRestore) {
+        this.inRestore = false;
+        return;
+      }
+      const data = JSON.stringify(val);
+      localforage.setItem("chat-" + this.apiKey, data);
+    },
+    async apiKey() {
+      let data = await localforage.getItem("chat-" + this.apiKey);
+      data = JSON.parse(data);
+      if (!data) data = [];
+      this.inRestore = true;
+      this.$setStore({
+        chatLogs: data,
+      });
+      this.$bus.emit("chat-to-btm");
+    },
+  },
   created() {
     this.$bus.on("send-msg", (msg) => {
       this.onSendMsg(msg);
