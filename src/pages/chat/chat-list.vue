@@ -44,13 +44,8 @@ export default {
     },
   },
   watch: {
-    chatLogs(val) {
-      if (this.inRestore) {
-        this.inRestore = false;
-        return;
-      }
-      const data = JSON.stringify(val);
-      localforage.setItem("chat-" + this.apiKey, data);
+    chatLogs() {
+      this.storeLogs();
     },
     async apiKey() {
       let data = await localforage.getItem("chat-" + this.apiKey);
@@ -67,11 +62,23 @@ export default {
     this.$bus.on("send-msg", (msg) => {
       this.onSendMsg(msg);
     });
+    if (this.apiKey && this.chatLogs?.length && !localStorage._storeLogs) {
+      localStorage._storeLogs = 1;
+      this.storeLogs();
+    }
   },
   unmounted() {
     this.$bus.off("send-msg");
   },
   methods: {
+    storeLogs() {
+      if (this.inRestore) {
+        this.inRestore = false;
+        return;
+      }
+      const data = JSON.stringify(this.chatLogs);
+      localforage.setItem("chat-" + this.apiKey, data);
+    },
     getMsgId(mm = "") {
       const rand = (Math.random() + "").substring(0, 4);
       return "msg-" + md5(Date.now() + rand + mm).substring(0, 8);
