@@ -90,7 +90,10 @@ export default {
     });
   },
   methods: {
-    onEnter() {
+    onEnter(e) {
+      if (e.shiftKey) {
+        return;
+      }
       if (this.composing) return;
       if (!this.trimVal) {
         this.inputVal = "";
