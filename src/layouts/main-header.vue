@@ -62,7 +62,7 @@ export default {
     }),
   },
   created() {
-    if (this.token) {
+    if (this.token && !this.userInfo.uid) {
       this.getUserInfo();
     }
   },
