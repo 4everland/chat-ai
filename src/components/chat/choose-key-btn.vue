@@ -112,7 +112,9 @@ export default {
     },
   },
   created() {
-    this.getList();
+    if (this.token && !this.apiKey) {
+      this.getList();
+    }
     this.$bus.on("tip-key", () => {
       this.onTip();
     });
