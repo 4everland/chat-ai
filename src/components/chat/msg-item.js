@@ -72,6 +72,7 @@ export default {
               this.onErr(json.error.message);
               return;
             }
+            // this.lastJson = json;
             const text = json.choices[0].delta?.content || "";
             if (text) {
               this.tokenNum++;
@@ -89,6 +90,7 @@ export default {
           if (typeof e.data == "string") {
             try {
               const data = JSON.parse(e.data);
+
               msg = data.error.message || data.error.code;
             } catch (error) {
               msg = e.data.trim() || msg;

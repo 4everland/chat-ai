@@ -199,7 +199,7 @@ export default {
       // console.log(this.info.id, this.resMsg);
       this.updateLog({
         content: this.resMsg,
-        spend: Date.now() - this.beginAt,
+        duration: Date.now() - this.beginAt,
         tokens: this.tokenNum,
       });
     },
