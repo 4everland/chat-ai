@@ -49,7 +49,7 @@
 
       <div class="d-flex">
         <div class="d-flex bd-1 bdrs-8 ov-h msg-item-con">
-          <div class="px-3 py-2 bg-con fz-16">
+          <div class="px-3 py-2 fz-15">
             <div
               :class="{
                 'line-3': !isEpand,
@@ -60,7 +60,7 @@
           </div>
 
           <div
-            class="bdl-1 expander al-c f-center bg-bd hover-1 select-none"
+            class="expander al-c f-center bg-left hover-1 select-none"
             @click="isEpand = !isEpand"
           >
             <div class="h-flex ev-n">

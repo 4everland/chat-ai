@@ -10,14 +10,7 @@
       <!-- <div class="fz-14 op-6 mb-1">{{ userInfo.uname }}</div> -->
       <div class="d-flex f-end">
         <div>
-          <q-btn
-            icon="cached"
-            size="sm"
-            dense
-            flat
-            color="primary"
-            @click="onRefresh"
-          ></q-btn>
+          <q-btn icon="cached" size="sm" dense flat @click="onRefresh"></q-btn>
         </div>
         <div class="msg-sent-con bg-left px-3 py-2 bdrs-8 fz-16 ta-l">
           <div v-html="html"></div>
