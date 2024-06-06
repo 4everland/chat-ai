@@ -23,7 +23,7 @@
 
 <template>
   <div class="h-flex h100p">
-    <div class="pa-3 bdb-1 bg-pink0">
+    <div class="pa-3">
       <div class="al-c">
         <img src="/img/model.svg" width="30" />
         <span class="fz-18 ml-2">Model</span>

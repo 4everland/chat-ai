@@ -32,7 +32,7 @@
 <template>
   <div class="d-flex msg-item mb-5 hover-wrap">
     <div>
-      <jazz-icon :hash="modelId" />
+      <jazz-icon :hash="modelId" :size="26" />
     </div>
     <div class="ml-2">
       <div class="d-flex mb-1 fz-13">

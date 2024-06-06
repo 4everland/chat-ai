@@ -7,7 +7,7 @@
 <template>
   <div class="d-flex f-end hover-wrap">
     <div class="mr-2 ta-r">
-      <div class="fz-14 op-6 mb-1">{{ userInfo.uname }}</div>
+      <!-- <div class="fz-14 op-6 mb-1">{{ userInfo.uname }}</div> -->
       <div class="d-flex f-end">
         <div>
           <q-btn
@@ -19,7 +19,7 @@
             @click="onRefresh"
           ></q-btn>
         </div>
-        <div class="msg-sent-con bg-pink1 px-3 py-2 bdrs-8 fz-16 ta-l">
+        <div class="msg-sent-con bg-left px-3 py-2 bdrs-8 fz-16 ta-l">
           <div v-html="html"></div>
         </div>
       </div>
@@ -43,9 +43,9 @@
       </div>
     </div>
 
-    <div>
+    <!-- <div>
       <jazz-icon :hash="userInfo.uid" />
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -112,19 +112,12 @@
   background: #808080;
 }
 
-.bg-pink0 {
-  background: #fcf9ff;
-}
-.bg-pink1 {
-  background: #f3e8ff;
-}
-
 $bdc: #cbd5e1;
 
 .bg-bd {
   background: $bdc;
 }
-.q-field--outlined .q-field__control:before,
+
 .bd-1 {
   border: 1px solid $bdc;
 }
@@ -137,4 +130,8 @@ $bdc: #cbd5e1;
 }
 .bdb-1 {
   border-bottom: 1px solid $bdc;
+}
+
+.bg-left {
+  background: #f8fafc;
 }

@@ -2,12 +2,19 @@
 .chat-input {
   textarea {
     max-height: 200px;
+    &::-webkit-input-placeholder {
+      color: #cbd5e1;
+    }
   }
   .send-btn {
     transform: scale(0.86);
   }
   .q-field--outlined .q-field__control {
     padding-right: 6px;
+    &::before,
+    &::after {
+      border: none !important;
+    }
   }
   .q-field__append {
     margin-top: auto;
@@ -16,10 +23,13 @@
 </style>
 
 <template>
-  <div class="chat-input pa-3 pt-0">
+  <div class="chat-input pa-3 pt-0 al-c">
+    <q-btn class="mr-2 bg-white" dense flat @click="onClearChat">
+      <img src="/img/ic-clear.svg" width="24" class="px-2p" />
+    </q-btn>
     <q-input
       ref="input"
-      class="flex-1 s-mb-2"
+      class="flex-1 s-mb-2 bg-left bdrs-8"
       outlined
       dense
       v-model="inputVal"
@@ -90,6 +100,11 @@ export default {
     });
   },
   methods: {
+    onClearChat() {
+      this.$setStore({
+        chatLogs: [],
+      });
+    },
     onEnter(e) {
       if (e.shiftKey) {
         return;

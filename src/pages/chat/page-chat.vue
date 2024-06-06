@@ -5,12 +5,9 @@ import ChatInput from "./chat-input.vue";
 
 <template>
   <div class="h-flex h100p">
-    <div class="al-c pa-3 bdb-1">
+    <div class="al-c pa-3">
       <span class="fz-18 mr-auto">Chat</span>
       <choose-key-btn />
-      <q-btn class="ml-3 bg-white bd-1" dense flat @click="onClearChat">
-        <img src="/img/ic-clear.svg" width="20" class="px-2p" />
-      </q-btn>
     </div>
 
     <q-scroll-area
@@ -74,11 +71,6 @@ export default {
     },
     onScroll(e) {
       // console.log(e.verticalPosition);
-    },
-    onClearChat() {
-      this.$setStore({
-        chatLogs: [],
-      });
     },
   },
 };
