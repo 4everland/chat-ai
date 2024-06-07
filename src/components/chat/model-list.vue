@@ -68,13 +68,7 @@
           </q-menu>
         </q-btn>
 
-        <q-btn
-          v-show="!!selected.length"
-          class="ml-3"
-          dense
-          flat
-          @click="onClear"
-        >
+        <q-btn class="ml-3" dense flat @click="onClose">
           <q-icon name="close" size="22px"></q-icon>
         </q-btn>
       </div>
@@ -113,6 +107,11 @@
         </div>
       </div>
     </q-scroll-area>
+    <div class="pa-3 ta-r">
+      <q-btn v-show="!!selected.length" dense flat @click="onClear">
+        <img src="/img/trash.svg" width="22" />
+      </q-btn>
+    </div>
   </div>
 </template>
 
@@ -176,6 +175,9 @@ export default {
     });
   },
   methods: {
+    onClose() {
+      this.$bus.emit("toggleMenu", "right");
+    },
     async onInit() {
       this.checked = JSON.parse(localStorage.checkedModels || "[]");
       await this.getModels();
