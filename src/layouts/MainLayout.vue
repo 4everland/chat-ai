@@ -16,7 +16,7 @@ import MainLogin from "./main-login.vue";
         show-if-above
         :breakpoint="900"
       >
-        <div>test</div>
+        <chat-menu />
       </q-drawer>
       <q-page-container>
         <div class="d-flex h100p">
