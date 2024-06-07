@@ -1,14 +1,12 @@
 <script setup>
 import ChatList from "./chat-list.vue";
 import ChatInput from "./chat-input.vue";
+import ChatHeader from "./chat-header.vue";
 </script>
 
 <template>
   <div class="h-flex h100p">
-    <div class="al-c pa-3">
-      <span class="fz-18 mr-auto">Chat</span>
-      <choose-key-btn />
-    </div>
+    <chat-header />
 
     <q-scroll-area
       ref="chatList"

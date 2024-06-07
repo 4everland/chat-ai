@@ -48,6 +48,10 @@ $warning: #f2c037;
     }
   }
 }
+body.desktop .q-hoverable:hover > .q-focus-helper {
+  background: #e9eff5;
+  opacity: 0.6;
+}
 
 .q-field--outlined.q-field--highlighted .q-field__control:after {
   border-width: 1px;

@@ -25,17 +25,10 @@
   <div class="h-flex h100p">
     <div class="pa-3">
       <div class="al-c">
-        <img src="/img/model.svg" width="30" />
-        <span class="fz-18 ml-2">Model</span>
+        <span class="fz-18 ml-2">Model List</span>
 
-        <q-btn
-          class="ml-auto"
-          color="primary"
-          dense
-          unelevated
-          :loading="loadingModel"
-        >
-          <q-icon name="add_circle_outline" size="20px"></q-icon>
+        <q-btn class="ml-auto" dense flat :loading="loadingModel">
+          <q-icon name="add_circle_outline" size="22px"></q-icon>
           <q-menu
             max-height="360px"
             transition-show="jump-down"
@@ -77,12 +70,12 @@
 
         <q-btn
           v-show="!!selected.length"
-          class="ml-3 bg-white bd-1"
+          class="ml-3"
           dense
           flat
           @click="onClear"
         >
-          <img src="/img/trash.svg" width="22" class="px-2p" />
+          <q-icon name="close" size="22px"></q-icon>
         </q-btn>
       </div>
     </div>
