@@ -48,6 +48,10 @@ $warning: #f2c037;
     }
   }
 }
+.q-btn--dense {
+  padding: 6px;
+  border-radius: 4px;
+}
 body.desktop .q-hoverable:hover > .q-focus-helper {
   background: #e9eff5;
   opacity: 0.6;

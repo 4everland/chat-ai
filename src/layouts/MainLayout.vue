@@ -63,9 +63,25 @@ export default {
       configModelId: (s) => s.configModelId,
     }),
   },
+  watch: {
+    showLeft(val) {
+      this.$setState({
+        isLeftOpen: val,
+      });
+    },
+    showRight(val) {
+      this.$setState({
+        isRightOpen: val,
+      });
+    },
+  },
   mounted() {
     this.$bus.on("toggleMenu", (side) => {
       this.onToggle(side);
+    });
+    this.$setState({
+      isLeftOpen: this.showLeft,
+      isRightOpen: this.showRight,
     });
   },
   methods: {

@@ -36,6 +36,8 @@ const store = createStore({
     jobModelIds: [],
     configModelId: null, // for settings
     configKeys,
+    isLeftOpen: false,
+    isRightOpen: false,
   },
   getters: {},
   mutations: {

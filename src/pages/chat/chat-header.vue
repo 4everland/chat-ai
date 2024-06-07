@@ -1,6 +1,14 @@
 <template>
   <div class="al-c pa-3">
-    <q-btn class="mr-2" flat dense @click="toggleMenu('left')">
+    <q-btn
+      class="mr-2"
+      :class="{
+        'bg-btn-on': isLeftOpen,
+      }"
+      flat
+      dense
+      @click="toggleMenu('left')"
+    >
       <img src="/img/ic-menu.svg" width="22px" />
     </q-btn>
     <span class="fz-18 mr-auto">Chat</span>
@@ -8,6 +16,9 @@
     <div class="al-c mr-1">
       <q-btn
         class="ml-3"
+        :class="{
+          'bg-btn-on': isRightOpen && it.name == 'model',
+        }"
         flat
         dense
         v-for="it in list"
@@ -21,7 +32,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: {
+    ...mapState(["isLeftOpen", "isRightOpen"]),
+  },
   data() {
     return {
       list: [
