@@ -96,7 +96,7 @@
             :disable="!isChange"
             @click="onReset"
           >
-            <span class="fz-13">Reset to Default</span>
+            <span class="fz-13">Reset</span>
           </q-btn>
         </div>
         <div class="mt-4">

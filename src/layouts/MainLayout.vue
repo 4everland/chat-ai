@@ -11,7 +11,7 @@ import MainLogin from "./main-login.vue";
     <q-layout v-else view="lHh Lpr lFf" class="bg-white vh100" container>
       <q-drawer
         class="bg-left"
-        :width="280"
+        :width="290"
         v-model="showLeft"
         show-if-above
         :breakpoint="900"
@@ -28,7 +28,7 @@ import MainLogin from "./main-login.vue";
 
       <q-drawer
         side="right"
-        :width="280"
+        :width="290"
         v-model="showRight"
         show-if-above
         :breakpoint="900"
