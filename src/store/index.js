@@ -48,6 +48,17 @@ const store = createStore({
         state[key] = data[key];
       }
     },
+    updateChatMenu(state, body) {
+      let chatMenus = [...state.chatMenus];
+      const { menuIdx } = state;
+      chatMenus[menuIdx] = {
+        ...chatMenus[menuIdx],
+        ...body,
+      };
+      setStore({
+        chatMenus,
+      });
+    },
     updateChatLog(state, body) {
       const chatLogs = [...state.chatLogs];
       const idx = chatLogs.findIndex((it) => it.id == body.id);

@@ -80,6 +80,11 @@ export default {
       const rand = (Math.random() + "").substring(0, 4);
       return "msg-" + md5(Date.now() + rand + mm).substring(0, 8);
     },
+    updateTitle(title) {
+      this.$store.commit("updateChatMenu", {
+        title,
+      });
+    },
     onSendMsg(content) {
       const id = this.getMsgId();
       const list = [
@@ -103,6 +108,7 @@ export default {
       if (chatLogs.length > 50) {
         //
       }
+      this.updateTitle(content);
       this.$setStore({
         chatLogs,
       });
