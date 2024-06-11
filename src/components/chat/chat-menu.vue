@@ -75,6 +75,7 @@ export default {
         menuIdx: i,
       });
       this.$bus.emit("chat-focus");
+      this.$bus.emit("close-left");
     },
     addMenu() {
       const row = this.chatMenus[0];

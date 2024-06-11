@@ -52,6 +52,7 @@ export default {
     const { screen } = useQuasar();
     const isOpen = screen.width > 900;
     return {
+      screen,
       showLeft: isOpen,
       showRight: isOpen,
     };
@@ -62,6 +63,9 @@ export default {
       apiKey: (s) => s.apiKey,
       configModelId: (s) => s.configModelId,
     }),
+    asPC() {
+      return this.screen.width > 900;
+    },
   },
   watch: {
     showLeft(val) {
@@ -78,6 +82,9 @@ export default {
   mounted() {
     this.$bus.on("toggleMenu", (side) => {
       this.onToggle(side);
+    });
+    this.$bus.on("close-left", () => {
+      if (!this.asPC) this.showLeft = false;
     });
     this.$setState({
       isLeftOpen: this.showLeft,

@@ -11,7 +11,7 @@
     >
       <img src="/img/ic-menu.svg" width="22" />
     </q-btn>
-    <span class="fz-18 mr-auto">Chat</span>
+    <span class="fz-18 mr-auto">{{ title }}</span>
 
     <div class="al-c mr-1">
       <q-btn
@@ -35,7 +35,10 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["isLeftOpen", "isRightOpen"]),
+    ...mapState(["isLeftOpen", "isRightOpen", "chatMenus", "menuIdx"]),
+    title() {
+      return this.chatMenus[this.menuIdx]?.title ?? "Chat";
+    },
   },
   data() {
     return {
