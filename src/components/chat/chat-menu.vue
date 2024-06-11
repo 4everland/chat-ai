@@ -7,6 +7,9 @@
           style="height: 24px"
         />
       </a>
+      <q-btn dense flat>
+        <img src="/img/edit.svg" width="22" />
+      </q-btn>
     </div>
     <q-scroll-area
       class="flex-1"
@@ -16,7 +19,21 @@
         opacity: 0.35,
       }"
     >
-      <div v-for="i in 30" :key="i">{{ i }}</div>
+      <div class="pa-3">
+        <div class="mb-1" v-for="i in 5" :key="i">
+          <q-btn
+            class="w100p"
+            :class="{
+              'bg-btn-on': i == 2,
+            }"
+            flat
+          >
+            <div class="w100p ta-l">
+              <span>Chat Title</span>
+            </div>
+          </q-btn>
+        </div>
+      </div>
     </q-scroll-area>
     <div class="bg-setting al-c pa-3">
       <jazz-icon :hash="userInfo.uid" :size="24" />

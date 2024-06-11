@@ -9,7 +9,7 @@
       dense
       @click="toggleMenu('left')"
     >
-      <img src="/img/ic-menu.svg" width="22px" />
+      <img src="/img/ic-menu.svg" width="22" />
     </q-btn>
     <span class="fz-18 mr-auto">Chat</span>
 
@@ -25,7 +25,7 @@
         :key="it.icon"
         @click="onAct(it)"
       >
-        <img :src="`/img/${it.icon}.svg`" width="22px" />
+        <img :src="`/img/${it.icon}.svg`" width="22" />
       </q-btn>
     </div>
   </div>

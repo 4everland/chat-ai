@@ -23,7 +23,7 @@
 </style>
 
 <template>
-  <div class="chat-input pa-3 pt-0 al-c">
+  <div class="chat-input px-2 py-1 pt-0 al-c">
     <q-btn class="mr-2 bg-white" dense flat @click="onClearChat">
       <img src="/img/ic-clear.svg" width="24" class="px-2p" />
     </q-btn>
