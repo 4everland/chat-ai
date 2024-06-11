@@ -7,7 +7,7 @@
           style="height: 24px"
         />
       </a>
-      <q-btn dense flat>
+      <q-btn dense flat @click="addMenu">
         <img src="/img/edit.svg" width="22" />
       </q-btn>
     </div>
@@ -20,16 +20,17 @@
       }"
     >
       <div class="pa-3">
-        <div class="mb-1" v-for="i in 5" :key="i">
+        <div class="mb-1" v-for="(it, i) in chatMenus" :key="it.id">
           <q-btn
             class="w100p"
             :class="{
-              'bg-btn-on': i == 2,
+              'bg-btn-on': i == menuIdx,
             }"
             flat
+            @click="onMenu(i)"
           >
             <div class="w100p ta-l">
-              <span>Chat Title</span>
+              <span>{{ it.title || "New Conversation" }}</span>
             </div>
           </q-btn>
         </div>
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+import md5 from "md5";
 import { mapState } from "vuex";
 
 export default {
@@ -55,14 +57,41 @@ export default {
     ...mapState({
       token: (s) => s.loginData.token,
       userInfo: (s) => s.userInfo,
+      chatMenus: (s) => s.chatMenus,
+      menuIdx: (s) => s.menuIdx,
     }),
   },
   created() {
     if (this.token && !this.userInfo.uid) {
       this.getUserInfo();
     }
+    if (!this.chatMenus.length) {
+      this.addMenu();
+    }
   },
   methods: {
+    onMenu(i) {
+      this.$setStore({
+        menuIdx: i,
+      });
+      this.$bus.emit("chat-focus");
+    },
+    addMenu() {
+      const row = this.chatMenus[0];
+      if (!row || !row.title) {
+        const rand = (Math.random() + "").substring(2, 6);
+        const id = "chat-" + md5(Date.now() + rand).substring(0, 6);
+        this.$setStore({
+          chatMenus: [
+            {
+              id,
+            },
+            ...this.chatMenus,
+          ],
+        });
+      }
+      this.onMenu(0);
+    },
     onLogin() {
       this.$router.replace("/login");
     },

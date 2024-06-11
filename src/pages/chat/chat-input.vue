@@ -75,6 +75,8 @@ export default {
   computed: {
     ...mapState({
       apiKey: (s) => s.apiKey,
+      chatMenus: (s) => s.chatMenus,
+      menuIdx: (s) => s.menuIdx,
     }),
     trimVal() {
       return this.inputVal.trim();
@@ -98,12 +100,23 @@ export default {
         this.composing = false;
       }, 100);
     });
+    this.$bus.on("chat-focus", () => {
+      this.$refs.input.focus();
+    });
   },
   methods: {
     onClearChat() {
       this.$setStore({
         chatLogs: [],
       });
+      if (this.chatMenus.length > 1) {
+        const chatMenus = [...this.chatMenus];
+        chatMenus.splice(this.menuIdx, 1);
+        this.$setStore({
+          chatMenus,
+          menuIdx: 0,
+        });
+      }
     },
     onEnter(e) {
       if (e.shiftKey) {

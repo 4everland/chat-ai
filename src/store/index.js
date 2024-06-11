@@ -7,6 +7,8 @@ const storInit = {
   loginData: {},
   userInfo: {},
   aiModels: [],
+  chatMenus: [],
+  menuIdx: 0,
   chatLogs: [],
   keyList: [],
   apiKey: "",

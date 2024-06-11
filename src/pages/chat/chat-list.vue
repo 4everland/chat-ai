@@ -26,6 +26,7 @@ export default {
       checkModelIds: (s) => s.checkModelIds,
       chatLogs: (s) => s.chatLogs,
       apiKey: (s) => s.apiKey,
+      menuId: (s) => s.chatMenus[s.menuIdx]?.id,
     }),
     checkModels() {
       return this.checkModelIds
@@ -47,8 +48,8 @@ export default {
     chatLogs() {
       this.storeLogs();
     },
-    async apiKey() {
-      let data = await localforage.getItem("chat-" + this.apiKey);
+    async menuId() {
+      let data = await localforage.getItem("chat-" + this.menuId);
       data = JSON.parse(data);
       if (!data) data = [];
       this.inRestore = true;
@@ -62,10 +63,6 @@ export default {
     this.$bus.on("send-msg", (msg) => {
       this.onSendMsg(msg);
     });
-    if (this.apiKey && this.chatLogs?.length && !localStorage._storeLogs) {
-      localStorage._storeLogs = 1;
-      this.storeLogs();
-    }
   },
   unmounted() {
     this.$bus.off("send-msg");
@@ -77,7 +74,7 @@ export default {
         return;
       }
       const data = JSON.stringify(this.chatLogs);
-      localforage.setItem("chat-" + this.apiKey, data);
+      localforage.setItem("chat-" + this.menuId, data);
     },
     getMsgId(mm = "") {
       const rand = (Math.random() + "").substring(0, 4);
