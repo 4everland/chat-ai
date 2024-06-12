@@ -20,7 +20,7 @@ import MainLogin from "./main-login.vue";
       </q-drawer>
       <q-page-container>
         <div class="d-flex h100p">
-          <div class="h100p flex-1">
+          <div class="wh100p flex-1">
             <router-view />
           </div>
         </div>

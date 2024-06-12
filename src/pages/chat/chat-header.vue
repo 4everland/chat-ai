@@ -11,7 +11,7 @@
     >
       <img src="/img/ic-menu.svg" width="22" />
     </q-btn>
-    <span class="fz-18 mr-auto">{{ title }}</span>
+    <span class="fz-18 mr-auto line-1">{{ title }}</span>
 
     <div class="al-c mr-1">
       <q-btn

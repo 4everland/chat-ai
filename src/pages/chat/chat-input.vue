@@ -105,11 +105,12 @@ export default {
     });
   },
   methods: {
-    onClearChat() {
+    async onClearChat() {
       this.$setStore({
         chatLogs: [],
       });
       if (this.chatMenus.length > 1) {
+        await this.$sleep(100);
         const chatMenus = [...this.chatMenus];
         chatMenus.splice(this.menuIdx, 1);
         this.$setStore({

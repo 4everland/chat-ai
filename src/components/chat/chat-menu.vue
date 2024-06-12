@@ -12,7 +12,7 @@
       </q-btn>
     </div>
     <q-scroll-area
-      class="flex-1"
+      class="flex-1 w100p"
       :thumb-style="{
         right: '2px',
         width: '3px',
@@ -29,8 +29,8 @@
             flat
             @click="onMenu(i)"
           >
-            <div class="w100p ta-l">
-              <span>{{ it.title || "New Conversation" }}</span>
+            <div class="w100p al-c">
+              <span class="line-1">{{ it.title || "New Conversation" }}</span>
             </div>
           </q-btn>
         </div>
