@@ -27,6 +27,7 @@
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
       </q-btn>
+      <choose-key-btn />
     </div>
   </div>
 </template>

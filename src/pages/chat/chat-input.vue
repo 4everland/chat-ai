@@ -134,6 +134,7 @@ export default {
         this.$bus.emit("tip-key");
         return;
       }
+      console.log(this.trimVal);
       this.$bus.emit("send-msg", this.trimVal);
       this.inputVal = "";
     },

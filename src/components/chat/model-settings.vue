@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   computed: {
@@ -120,6 +120,7 @@ export default {
       aiModels: (s) => s.aiModels,
       configModelId: (s) => s.configModelId,
     }),
+    ...mapGetters(["chatMenu"]),
     curItem() {
       return this.aiModels.find((it) => it.id == this.configModelId);
     },
@@ -157,8 +158,16 @@ export default {
     };
   },
   watch: {
+    "chatMenu.id"() {
+      this.onBack();
+    },
     configModelId(val) {
       if (val) this.onInit();
+    },
+    configMap(val) {
+      this.$store.commit("updateChatMenu", {
+        modelConfig: val,
+      });
     },
   },
   created() {
@@ -179,7 +188,7 @@ export default {
       }
     },
     applyToAll() {
-      this.$setStore({
+      this.$setState({
         configMap: {
           all: {
             ...this.curForm,

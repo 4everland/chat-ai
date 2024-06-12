@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
     return {
       loadingModel: false,
-      selected: JSON.parse(localStorage.selectedModels || "[]"),
+      selected: [],
       checked: [],
       searchKey: "",
     };
@@ -131,6 +131,7 @@ export default {
     ...mapState({
       aiModels: (s) => s.aiModels,
     }),
+    ...mapGetters(["chatMenu"]),
     modelGroups() {
       const groups = [];
       for (const row of this.aiModels) {
@@ -158,14 +159,21 @@ export default {
   },
   watch: {
     checked(val) {
-      localStorage.checkedModels = JSON.stringify(val);
       // this.$emit("update-checked", val);
       this.$setState({
         checkModelIds: val,
       });
+      this.$store.commit("updateChatMenu", {
+        checkedModels: val,
+      });
     },
     selected(val) {
-      localStorage.selectedModels = JSON.stringify(val);
+      this.$store.commit("updateChatMenu", {
+        selectedModels: val,
+      });
+    },
+    "chatMenu.id"() {
+      this.onInit();
     },
   },
   created() {
@@ -179,7 +187,16 @@ export default {
       this.$bus.emit("toggleMenu", "right");
     },
     async onInit() {
-      this.checked = JSON.parse(localStorage.checkedModels || "[]");
+      const {
+        selectedModels = [],
+        checkedModels = [],
+        modelConfig = {},
+      } = this.chatMenu || {};
+      this.$setState({
+        configMap: modelConfig,
+      });
+      this.selected = [...selectedModels];
+      this.checked = [...checkedModels];
       await this.getModels();
       let { model } = this.$route.query;
       if (model) {
@@ -187,7 +204,7 @@ export default {
         if (!isIn) model = "";
       }
       if (!this.selected.length && !model) {
-        model = "openai/gpt-3.5-turbo"; // "4ever/auto";
+        model = "4ever/auto"; // "openai/gpt-3.5-turbo"; //
       }
       if (model) {
         if (!this.selected.includes(model)) {

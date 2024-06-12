@@ -13,7 +13,6 @@ const storInit = {
   keyList: [],
   apiKey: "",
   importKey: null,
-  configMap: {},
 };
 const storState = {
   ...storInit,
@@ -36,12 +35,17 @@ const store = createStore({
     showProgress: false,
     checkModelIds: [],
     jobModelIds: [],
+    configMap: {},
     configModelId: null, // for settings
     configKeys,
     isLeftOpen: false,
     isRightOpen: false,
   },
-  getters: {},
+  getters: {
+    chatMenu(s) {
+      return s.chatMenus[s.menuIdx];
+    },
+  },
   mutations: {
     [SET_DATA](state, data) {
       for (const key in data) {
