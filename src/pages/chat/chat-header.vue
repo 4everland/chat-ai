@@ -14,6 +14,14 @@
     <span class="fz-18 mr-auto line-1">{{ title || "Chat" }}</span>
 
     <div class="al-c mr-1">
+      <div class="d-n">
+        <input
+          ref="file"
+          type="file"
+          accept="application/json"
+          @input="onUploadFile"
+        />
+      </div>
       <choose-key-btn />
       <q-btn
         class="ml-3"
@@ -33,10 +41,11 @@
 </template>
 
 <script>
+import md5 from "md5";
 import { mapGetters, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["isLeftOpen", "isRightOpen", "chatLogs"]),
+    ...mapState(["isLeftOpen", "isRightOpen", "chatLogs", "chatMenus"]),
     ...mapGetters(["chatMenu"]),
     title() {
       return this.chatMenu?.title;
@@ -68,20 +77,53 @@ export default {
       if (name == "model") {
         this.toggleMenu("right");
       } else if (name == "download") {
-        this.onDownload();
+        this.doDownload();
+      } else if (name == "upload") {
+        this.$refs.file.click();
       }
     },
-    onDownload() {
+    doDownload() {
       const json = JSON.stringify(
         {
           ...this.chatMenu,
+          time: Date.now(),
           logs: this.chatLogs,
         },
         null,
         "  "
       );
-      const name = "4ever-chat " + new Date().format();
+      const name = "4ever-chat " + new Date().format("date");
       window.download(json, name + ".json", "application/json");
+    },
+    onUploadFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target.result; // 读取到的文件内容
+        this.setConfig(content);
+      };
+      reader.readAsText(file);
+    },
+    setConfig(content) {
+      try {
+        const { logs, ...menu } = JSON.parse(content);
+        if (!Array.isArray(logs) || !menu.id) {
+          throw new Error("Unsupported config");
+        }
+        menu.id = menu.id + "-" + md5(Date.now()).substring(0, 4);
+        this.$setStore({
+          chatMenus: [menu, ...this.chatMenus],
+          menuIdx: 0,
+        });
+        setTimeout(() => {
+          this.$setStore({
+            chatLogs: logs,
+          });
+        }, 100);
+      } catch (error) {
+        window.$toast(error.message);
+      }
     },
   },
 };

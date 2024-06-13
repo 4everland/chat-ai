@@ -74,7 +74,7 @@ export default {
       else if (!value) msg = "API Key is required";
       else if (!/^\w{32}$/.test(value)) msg = "Invalid API Key";
       if (msg) {
-        return this.$toast(msg);
+        return window.$toast(msg);
       }
       this.$setStore({
         apiKey: value,
