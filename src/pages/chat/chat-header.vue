@@ -11,9 +11,10 @@
     >
       <img src="/img/ic-menu.svg" width="22" />
     </q-btn>
-    <span class="fz-18 mr-auto line-1">{{ title }}</span>
+    <span class="fz-18 mr-auto line-1">{{ title || "Chat" }}</span>
 
     <div class="al-c mr-1">
+      <choose-key-btn />
       <q-btn
         class="ml-3"
         :class="{
@@ -27,28 +28,30 @@
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
       </q-btn>
-      <choose-key-btn />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["isLeftOpen", "isRightOpen", "chatMenus", "menuIdx"]),
+    ...mapState(["isLeftOpen", "isRightOpen", "chatLogs"]),
+    ...mapGetters(["chatMenu"]),
     title() {
-      return this.chatMenus[this.menuIdx]?.title ?? "Chat";
+      return this.chatMenu?.title;
     },
   },
   data() {
     return {
       list: [
         {
-          icon: "ic-upload",
+          icon: "ic-download",
+          name: "download",
         },
         {
-          icon: "ic-download",
+          icon: "ic-upload",
+          name: "upload",
         },
         {
           icon: "ic-robot",
@@ -64,7 +67,21 @@ export default {
     onAct({ name }) {
       if (name == "model") {
         this.toggleMenu("right");
+      } else if (name == "download") {
+        this.onDownload();
       }
+    },
+    onDownload() {
+      const json = JSON.stringify(
+        {
+          ...this.chatMenu,
+          logs: this.chatLogs,
+        },
+        null,
+        "  "
+      );
+      const name = "4ever-chat " + new Date().format();
+      window.download(json, name + ".json", "application/json");
     },
   },
 };

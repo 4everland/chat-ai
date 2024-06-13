@@ -117,6 +117,10 @@ export default {
           chatMenus,
           menuIdx: 0,
         });
+      } else {
+        this.$store.commit("updateChatMenu", {
+          title: "",
+        });
       }
     },
     onEnter(e) {

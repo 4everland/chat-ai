@@ -241,7 +241,7 @@ export default {
         [this.configModelId]: { ...this.curForm },
       };
       // console.log(configMap);
-      this.$setStore({ configMap });
+      this.$setState({ configMap });
     },
     onBack() {
       this.$setState({
