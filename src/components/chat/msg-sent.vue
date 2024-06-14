@@ -12,7 +12,7 @@
         <div>
           <q-btn icon="cached" size="sm" dense flat @click="onRefresh"></q-btn>
         </div>
-        <div class="msg-sent-con bg-left px-3 py-2 bdrs-8 fz-16 ta-l">
+        <div class="msg-sent-con bg-left px-3 py-2 bdrs-8 fz-15 ta-l">
           <div v-html="html"></div>
         </div>
       </div>

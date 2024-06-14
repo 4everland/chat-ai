@@ -95,6 +95,7 @@ export default {
         },
       ];
       const jobModelIds = [];
+      const isExpand = this.checkModels.length == 1;
       for (const row of this.checkModels) {
         jobModelIds.push(row.id);
         list.push({
@@ -102,6 +103,7 @@ export default {
           id: this.getMsgId(row.id),
           model: row.id,
           createAt: Date.now() + 10,
+          expand: isExpand,
         });
       }
       const chatLogs = [...this.chatLogs, ...list];
