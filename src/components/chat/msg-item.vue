@@ -194,6 +194,9 @@ export default {
     }
     this.isExpand = !!this.info.expand;
   },
+  beforeUnmount() {
+    this.closeAi();
+  },
   methods: {
     onDel() {
       this.closeAi();
