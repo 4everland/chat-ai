@@ -34,7 +34,6 @@
       dense
       v-model="inputVal"
       autogrow
-      maxlength="1500"
       placeholder="Chat or prompt"
       @keyup.enter="onEnter"
       @focus="isFoucs = true"
@@ -101,7 +100,8 @@ export default {
         this.composing = false;
       }, 100);
     });
-    this.$bus.on("chat-focus", () => {
+    this.$bus.on("chat-focus", (val) => {
+      if (val) this.inputVal = val;
       this.$refs.input.focus();
     });
   },

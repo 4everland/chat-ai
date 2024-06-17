@@ -1,4 +1,10 @@
+<script setup>
+import ChatEmpty from "./chat-empty.vue";
+</script>
+
 <template>
+  <chat-empty v-if="!showChatLogs.length" />
+
   <div class="pa-4">
     <template v-for="it in showChatLogs" :key="it.id">
       <msg-item

@@ -3,19 +3,14 @@
   &.check {
     background: #fff;
     &:hover {
-      background: #f3e8ff;
-      border-color: #775da655;
-      border-color: rgb(119 93 166 / 30%);
+      background: #e9eff5;
     }
   }
   &.uncheck {
     background: #f8fafc;
-    border: 1px dashed #cbd5e1;
     color: #94a3b8;
     &:hover {
-      background: #f3e8ff;
-      border-color: #775da655;
-      border-color: rgb(119 93 166 / 35%);
+      // background: #F8FAFC;
     }
   }
 }
