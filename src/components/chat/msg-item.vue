@@ -37,7 +37,7 @@
     <div class="ml-2">
       <div class="d-flex mb-1 fz-13">
         <a
-          class="al-c hover-1"
+          class="al-c hover-1 link"
           :href="$getHomeUrl('/ai-rpc/model/' + encodeURIComponent(modelId))"
           target="_blank"
         >

@@ -13,8 +13,11 @@ body {
 }
 
 a {
-  color: #006eff;
+  color: inherit;
   text-decoration: none;
+}
+.link {
+  color: #006eff;
 }
 
 .max-wrap {

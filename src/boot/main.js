@@ -23,6 +23,7 @@ export default boot(({ app }) => {
   global.$bus = new EventBus();
 
   global.$getHomeUrl = (path = "") => {
+    if (/^https:/.test(path)) return path;
     return VITE_HOME_URL + path;
   };
 

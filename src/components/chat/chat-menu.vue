@@ -24,7 +24,7 @@
           <q-btn
             class="w100p"
             :class="{
-              'bg-btn-on': i == menuIdx,
+              'bg-btn-on': path == '/' && i == menuIdx,
             }"
             flat
             @click="onMenu(i)"
@@ -36,9 +36,11 @@
         </div>
       </div>
     </q-scroll-area>
-    <div class="bg-setting al-c pa-3">
-      <jazz-icon :hash="userInfo.uid" :size="24" />
-      <span class="ml-2">{{ userInfo.uname }}</span>
+    <div class="bg-btn-1 al-c pa-3" @click="$router.push('/settings')">
+      <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="24" />
+      <img v-else src="/img/chat/avatar.svg" width="24" />
+      <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
+      <img class="ml-auto" src="/img/chat/settings.svg" width="22" />
     </div>
   </div>
 </template>
@@ -60,6 +62,9 @@ export default {
       chatMenus: (s) => s.chatMenus,
       menuIdx: (s) => s.menuIdx,
     }),
+    path() {
+      return this.$route.path;
+    },
   },
   created() {
     if (this.token && !this.userInfo.uid) {
@@ -71,6 +76,9 @@ export default {
   },
   methods: {
     onMenu(i) {
+      if (this.path != "/") {
+        this.$router.push("/");
+      }
       this.$setStore({
         menuIdx: i,
       });

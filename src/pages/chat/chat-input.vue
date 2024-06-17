@@ -100,11 +100,9 @@ export default {
         this.composing = false;
       }, 100);
     });
-    this.$bus.on("chat-focus", (val) => {
-      if (val) this.inputVal = val;
+    this.$bus.on("chat-focus", () => {
       this.$refs.input.focus();
     });
-    this.$bus.on("chat-input", (val) => {});
   },
   methods: {
     async onClearChat() {

@@ -13,7 +13,7 @@
     </q-btn>
     <span class="fz-18 mr-auto line-1">{{ title || "Chat" }}</span>
 
-    <div class="al-c mr-1">
+    <div class="al-c mr-1" v-show="path == '/'">
       <div class="d-n">
         <input
           ref="file"
@@ -22,7 +22,7 @@
           @input="onUploadFile"
         />
       </div>
-      <choose-key-btn />
+      <!-- <choose-key-btn /> -->
       <q-btn
         class="ml-3"
         :class="{
@@ -47,8 +47,14 @@ export default {
   computed: {
     ...mapState(["isLeftOpen", "isRightOpen", "chatLogs", "chatMenus"]),
     ...mapGetters(["chatMenu"]),
+    path() {
+      return this.$route.path;
+    },
+
     title() {
-      return this.chatMenu?.title;
+      if (this.path == "/") return this.chatMenu?.title;
+      if (this.path == "/settings") return "Settings";
+      return "";
     },
   },
   data() {

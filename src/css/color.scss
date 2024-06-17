@@ -135,8 +135,12 @@ $bdc: #f8fafc;
 .bg-left {
   background: #f8fafc;
 }
-.bg-setting {
+.bg-btn-1 {
   background: #f1f5f9;
+  cursor: pointer;
+}
+.bg-btn-1:hover {
+  background: #e9eff5;
 }
 .bg-btn-on {
   background: #eaeff4;
