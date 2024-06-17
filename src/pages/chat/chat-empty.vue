@@ -6,7 +6,7 @@
     <div class="row q-col-gutter-md mt-6">
       <div class="col-6 col-lg-3" v-for="it in list" :key="it.icon">
         <div class="bg-left pa-2 bdrs-5 hover-1" @click="setInput(it.desc)">
-          <img :src="`/img/chat/${it.icon}.svg`" width="20" />
+          <img :src="`/img/chat/${it.icon}.svg`" width="24" />
           <div class="fz-14 label-0 line-2" style="min-height: 42px">
             {{ it.title }}
           </div>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     setInput(val) {
-      this.$bus.emit("chat-focus", val);
+      this.$bus.emit("send-msg", val);
     },
   },
 };

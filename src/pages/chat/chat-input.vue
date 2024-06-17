@@ -104,6 +104,7 @@ export default {
       if (val) this.inputVal = val;
       this.$refs.input.focus();
     });
+    this.$bus.on("chat-input", (val) => {});
   },
   methods: {
     async onClearChat() {
@@ -141,7 +142,10 @@ export default {
         this.$bus.emit("tip-key");
         return;
       }
-      console.log(this.trimVal);
+      // console.log(this.trimVal);
+      this.sendMsg();
+    },
+    sendMsg() {
       this.$bus.emit("send-msg", this.trimVal);
       this.inputVal = "";
     },
