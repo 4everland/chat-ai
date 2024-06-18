@@ -80,7 +80,7 @@
         <div
           v-for="it in modelOptions"
           :key="it.id"
-          class="bd-1 px-3 py-2 bdrs-6 mb-3 model-item pos-r hover-wrap"
+          class="px-3 py-2 bdrs-6 mb-3 model-item pos-r hover-wrap"
           :class="checked.includes(it.id) ? 'check' : 'uncheck'"
         >
           <div class="al-c">

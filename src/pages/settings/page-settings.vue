@@ -1,3 +1,7 @@
+<script setup>
+import SetKey from "./set-key.vue";
+</script>
+
 <template>
   <div>
     <div class="mt-9 pa-4 d-flex flex-center">
@@ -23,6 +27,7 @@
             </a>
           </div>
         </div>
+        <set-key />
       </div>
     </div>
   </div>
@@ -30,6 +35,7 @@
 
 <script>
 import { mapState } from "vuex";
+
 export default {
   data() {
     return {};

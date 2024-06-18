@@ -1,67 +1,8 @@
 <template>
-  <div class="al-c">
-    <q-btn
-      icon="edit"
-      dense
-      flat
-      size="sm"
-      class="mr-1"
-      v-if="importKey && importKey.value == apiKey"
-      @click="showImport"
-    ></q-btn>
-    <q-btn
-      flat
-      dense
-      class="bg-white bd-1"
-      :loading="loading"
-      @click="isEpand = !isEpand"
+  <div class="mt-3" v-show="!apiKey">
+    <q-btn color="info" class="w100p" @click="$bus.emit('show-import')"
+      >Import a key</q-btn
     >
-      <span class="fz-13 mr-auto px-2 ta-l lh-15" style="min-width: 120px">{{
-        keyName
-      }}</span>
-      <img
-        src="/img/ic-down.svg"
-        width="14"
-        class="icon-down trans-200 mr-1"
-        :class="[
-          {
-            'up-down': isEpand,
-          },
-        ]"
-      />
-      <q-menu
-        transition-show="jump-down"
-        transition-hide="jump-up"
-        @before-hide="isEpand = false"
-      >
-        <div v-if="apiKey" class="pa-3 pb-1 fz-12 gray">API Key</div>
-        <q-list dense style="min-width: 160px">
-          <q-item
-            clickable
-            v-close-popup
-            v-for="it in myKeyList"
-            :key="it.id"
-            :active="it.key == apiKey"
-            @click="setKey(it.key)"
-          >
-            <q-item-section>
-              <span>{{ it.name }}</span>
-            </q-item-section>
-          </q-item>
-          <q-item
-            clickable
-            v-close-popup
-            v-if="!keyList.length"
-            @click="onCreate"
-          >
-            <q-item-section> Create API Key </q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup v-if="!importKey" @click="showImport">
-            <q-item-section> Import API Key </q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
-    </q-btn>
   </div>
 </template>
 
@@ -87,11 +28,6 @@ export default {
       }
       return list;
     },
-    keyName() {
-      const item = this.myKeyList.find((it) => it.key == this.apiKey);
-      if (item) return item.name;
-      return "Choose Key";
-    },
   },
   data() {
     return {
@@ -115,9 +51,6 @@ export default {
     if (this.token && !this.apiKey) {
       this.getList();
     }
-    this.$bus.on("tip-key", () => {
-      this.onTip();
-    });
   },
   methods: {
     setKey(apiKey) {
@@ -161,20 +94,9 @@ export default {
         }
         this.setKey(apiKey);
         if (!this.keyList.length && !this.hasGot) {
-          // this.onTip();
           this.hasGot = true;
           this.onCreate();
         }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async onTip() {
-      try {
-        await this.$confirm("API Key required", {
-          okLabel: "Create",
-        });
-        await this.onCreate();
       } catch (error) {
         console.log(error);
       }

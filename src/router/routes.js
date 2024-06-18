@@ -1,6 +1,6 @@
 import PageChat from "pages/chat/page-chat.vue";
 import PageLogin from "pages/page-login.vue";
-import PageSettings from "pages/page-settings.vue";
+import PageSettings from "src/pages/settings/page-settings.vue";
 
 const routes = [
   {

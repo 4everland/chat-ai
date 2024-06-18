@@ -7,6 +7,10 @@
 }
 </style>
 
+<script setup>
+import importBtn from "./import-btn.vue";
+</script>
+
 <template>
   <div class="h-flex h100p">
     <div class="pa-3 al-c">
@@ -49,11 +53,13 @@
       <q-btn v-if="!token" color="primary" class="w100p" @click="onLogin"
         >Sign in</q-btn
       >
-      <q-btn v-if="!apiKey" color="info" class="w100p mt-3" @click="onImport"
-        >Import a key</q-btn
-      >
+      <import-btn />
     </div>
-    <div class="bg-btn-1 al-c pa-3" @click="$router.push('/settings')">
+    <div
+      v-if="apiKey"
+      class="bg-btn-1 al-c pa-3"
+      @click="$router.push('/settings')"
+    >
       <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="24" />
       <img v-else src="/img/chat/avatar.svg" width="24" />
       <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
@@ -96,9 +102,6 @@ export default {
     onLogin() {
       // this.$router.replace("/login");
       location.href = this.$getHomeUrl("/quick-login?type=chat");
-    },
-    onImport() {
-      this.$bus.emit("show-import");
     },
     onMenu(i) {
       if (this.path != "/") {
