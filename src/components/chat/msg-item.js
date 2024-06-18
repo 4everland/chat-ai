@@ -16,8 +16,10 @@ export default {
   methods: {
     onErr(msg) {
       if (msg == "Key not found.") {
-        const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
-        msg = `Correct API Key required, get it in [Dashboard](${url})`;
+        // const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
+        const url = this.$getHomeUrl("/quick-login?type=chat");
+        // msg = `Correct API Key required, get it in [Dashboard](${url})`;
+        msg = `Please [sign in](${url}) to start the conversation.`;
       }
       if (msg == "Balance not enough.") {
         const url = this.$getHomeUrl("/billing/deposit");
