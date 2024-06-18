@@ -172,6 +172,8 @@ export default {
     },
   },
   created() {
+    let { model = "" } = this.$route.query;
+    this.initModel = model;
     this.onInit();
     this.$bus.on("select-model", (id) => {
       this.onSelect(id);
@@ -193,7 +195,11 @@ export default {
       this.selected = [...selectedModels];
       this.checked = [...checkedModels];
       await this.getModels();
-      let { model } = this.$route.query;
+      let model = this.initModel;
+      if (model) {
+        this.initModel = "";
+        this.$router.replace("/");
+      }
       if (model) {
         const isIn = this.aiModels.find((it) => it.id == model);
         if (!isIn) model = "";
