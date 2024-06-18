@@ -21,7 +21,7 @@ export default {
         !/localhost/.test(location.host)
       ) {
         location.href =
-          "http://localhost:9001/login?t=" + encodeURIComponent(token);
+          "http://localhost:9000/login?t=" + encodeURIComponent(token);
         return;
       }
       this.$setStore({

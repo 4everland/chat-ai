@@ -6,7 +6,7 @@ import SetKey from "./set-key.vue";
   <div>
     <div class="mt-9 pa-4 d-flex flex-center">
       <div class="w100p" style="max-width: 500px">
-        <div class="al-c">
+        <div class="al-c mb-5">
           <jazz-icon v-if="logged" :hash="userInfo.uid" :size="40" />
           <img v-else src="/img/chat/avatar.svg" width="40" />
           <span class="ml-3 fw-b fz-16">{{ userInfo.uname || "Visitor" }}</span>
@@ -15,7 +15,7 @@ import SetKey from "./set-key.vue";
             <img src="/img/chat/logout.svg" width="22" />
           </q-btn>
         </div>
-        <div class="row q-col-gutter-md mt-3">
+        <div class="row q-col-gutter-md" vif="logged">
           <div class="col-6" v-for="it in links" :key="it.label">
             <a
               target="_blank"
@@ -44,11 +44,13 @@ export default {
     ...mapState({
       userInfo: (s) => s.userInfo,
       apiKey: (s) => s.apiKey,
+      keyList: (s) => s.keyList,
     }),
     logged() {
       return !!this.userInfo.uid;
     },
     links() {
+      const notMyKey = !this.keyList.find((it) => it.key == this.apiKey);
       return [
         {
           label: "Deposit Land",
@@ -56,7 +58,9 @@ export default {
         },
         {
           label: "Activities",
-          href: "/ai-rpc/key/autoGen/" + this.apiKey,
+          href: notMyKey
+            ? "/ai-rpc?tab=Keys"
+            : "/ai-rpc/key/autoGen/" + this.apiKey,
         },
         {
           label: "Models",

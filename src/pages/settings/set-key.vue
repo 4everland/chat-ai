@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 bg-left bdrs-5 pa-3">
+  <div class="mt-4 bg-left bdrs-5 pa-3">
     <div class="al-c">
       <b class="fz-16">Set default key</b>
       <q-btn
@@ -23,7 +23,7 @@
         }"
         @click="setKey(it.key)"
       >
-        <span class="fz-16">{{ it.name }}</span>
+        <span class="fz-16 line-1">{{ it.name }}</span>
         <span class="ml-1 op-5" v-if="it.imported">(imported)</span>
         <div
           class="ml-auto al-c"
@@ -55,7 +55,7 @@ export default {
       if (this.importKey) {
         const { name, value } = this.importKey;
         list.push({
-          name: name,
+          name,
           key: value,
           imported: true,
         });
