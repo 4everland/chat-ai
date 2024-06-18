@@ -1,5 +1,5 @@
 <template>
-  <div class="h-flex h100p" v-if="curItem">
+  <div class="h-flex h100p no-bd" v-if="curItem">
     <div class="pa-3 bdb-1 bg-pink0">
       <div class="al-c">
         <jazz-icon hash="test" :size="30"></jazz-icon>
@@ -26,7 +26,7 @@
       }"
     >
       <div class="pa-4">
-        <div class="mb-2" v-for="it in configKeys" :key="it.name">
+        <div class="mb-1" v-for="it in configKeys" :key="it.name">
           <div v-if="!it.max">
             <div class="label-1">{{ it.label }}</div>
             <q-input
@@ -43,11 +43,11 @@
           <div v-else class="al-c">
             <div class="flex-1">
               <div class="al-c label-1">
-                <span class="mr-1">{{ it.label }}</span>
+                <span class="mr-">{{ it.label }}</span>
                 <q-btn icon="info_outline" flat size="xs" dense>
                   <q-tooltip
                     max-width="300px"
-                    class="bg-white gray bd-1 fz-14"
+                    class="bg-white gray fz-14"
                     anchor="center right"
                     self="top left"
                   >
@@ -84,7 +84,7 @@
         <div class="al-c mt-4">
           <q-btn
             flat
-            class="bg-white bd-1 flex-1"
+            class="bg-white flex-1"
             :disable="isAll"
             @click="applyToAll"
           >
@@ -92,7 +92,7 @@
           </q-btn>
           <q-btn
             flat
-            class="bg-white bd-1 flex-1 ml-3"
+            class="bg-white flex-1 ml-3"
             :disable="!isChange"
             @click="onReset"
           >
@@ -100,7 +100,7 @@
           </q-btn>
         </div>
         <div class="mt-4">
-          <q-btn color="red" flat class="w100p bd-1 bg-white" @click="onRemove">
+          <q-btn color="red" flat class="w100p bg-white" @click="onRemove">
             Remove
           </q-btn>
         </div>

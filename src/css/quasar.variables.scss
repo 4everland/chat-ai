@@ -61,6 +61,11 @@ $warning: #f2c037;
     height: 30px;
   }
 }
+.no-bd {
+  .q-field--outlined .q-field__control:before {
+    border: none;
+  }
+}
 .q-input.ta-r {
   input {
     text-align: right;
