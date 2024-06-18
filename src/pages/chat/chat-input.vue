@@ -101,7 +101,7 @@ export default {
       }, 100);
     });
     this.$bus.on("chat-focus", () => {
-      this.$refs.input.focus();
+      this.$refs.input?.focus();
     });
   },
   methods: {
@@ -118,6 +118,8 @@ export default {
       if (!len && this.chatMenus.length > 1) {
         await this.$sleep(100);
         const chatMenus = [...this.chatMenus];
+        const menu = chatMenus[this.menuIdx];
+        await localforage.removeItem("chat-" + menu.id);
         chatMenus.splice(this.menuIdx, 1);
         this.$setStore({
           chatMenus,

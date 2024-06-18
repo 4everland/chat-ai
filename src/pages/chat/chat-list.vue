@@ -55,18 +55,12 @@ export default {
       this.storeLogs();
     },
     async menuId() {
-      let data = await localforage.getItem("chat-" + this.menuId);
-      data = JSON.parse(data);
-      if (!data) data = [];
-      this.inRestore = true;
-      this.$setStore({
-        chatLogs: data,
-      });
-      this.$bus.emit("chat-to-btm");
+      this.setLogs();
     },
   },
   created() {
     this.$bus.on("send-msg", (msg) => {
+      console.log(msg);
       this.onSendMsg(msg);
     });
   },
@@ -74,6 +68,20 @@ export default {
     this.$bus.off("send-msg");
   },
   methods: {
+    async setLogs() {
+      const menuId = this.menuId;
+      let data = await localforage.getItem("chat-" + menuId);
+      if (menuId != this.menuId) return;
+      if (data) {
+        data = JSON.parse(data);
+      }
+      if (!data) data = [];
+      this.inRestore = true;
+      this.$setStore({
+        chatLogs: data,
+      });
+      this.$bus.emit("chat-to-btm");
+    },
     storeLogs() {
       if (this.inRestore) {
         this.inRestore = false;

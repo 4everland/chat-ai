@@ -38,6 +38,7 @@ const store = createStore({
     configMap: {},
     configModelId: null, // for settings
     configKeys,
+    chatLogMap: {},
     isLeftOpen: false,
     isRightOpen: false,
   },
@@ -61,6 +62,17 @@ const store = createStore({
         apiKey,
         keyList: [],
         // importKey: null,
+      });
+    },
+    updateLogMap(state, logList) {
+      const { chatLogMap, chatMenus, menuIdx } = state;
+      const { id } = chatMenus[menuIdx] || {};
+      if (!id) return console.log("no chat", id);
+      setState({
+        chatLogMap: {
+          ...chatLogMap,
+          [id]: logList,
+        },
       });
     },
     updateChatMenu(state, body) {

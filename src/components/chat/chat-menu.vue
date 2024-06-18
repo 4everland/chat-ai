@@ -116,18 +116,19 @@ export default {
       this.$bus.emit("chat-focus");
       this.$bus.emit("close-left");
     },
-    addMenu() {
+    async addMenu() {
       const row = this.chatMenus[0];
       if (!row || row.title) {
         const rand = (Math.random() + "").substring(2, 6);
         const id = "chat-" + md5(Date.now() + rand).substring(0, 6);
-        this.$setStore({
+        await this.$setStore({
           chatMenus: [
             {
               id,
             },
             ...this.chatMenus,
           ],
+          chatLogs: [],
         });
       }
       this.onMenu(0);
