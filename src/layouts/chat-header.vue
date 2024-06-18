@@ -35,6 +35,7 @@
         @click="onAct(it)"
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
+        <b class="ml-">{{ it.txt }}</b>
       </q-btn>
     </div>
   </div>
@@ -45,21 +46,31 @@ import md5 from "md5";
 import { mapGetters, mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["isLeftOpen", "isRightOpen", "chatLogs", "chatMenus"]),
+    ...mapState([
+      "isLeftOpen",
+      "isRightOpen",
+      "chatLogs",
+      "chatMenus",
+      "checkModelIds",
+    ]),
     ...mapGetters(["chatMenu"]),
     path() {
       return this.$route.path;
     },
-
+    modelLen() {
+      return this.checkModelIds.length;
+    },
     title() {
       if (this.path == "/") return this.chatMenu?.title;
       if (this.path == "/settings") return "Settings";
       return "";
     },
-  },
-  data() {
-    return {
-      list: [
+    list() {
+      let txt = "";
+      if (this.modelLen) {
+        txt = "✖️" + this.modelLen;
+      }
+      return [
         {
           icon: "ic-download",
           name: "download",
@@ -71,9 +82,13 @@ export default {
         {
           icon: "ic-robot",
           name: "model",
+          txt,
         },
-      ],
-    };
+      ];
+    },
+  },
+  data() {
+    return {};
   },
   methods: {
     toggleMenu(side) {
