@@ -52,10 +52,14 @@ const store = createStore({
         state[key] = data[key];
       }
     },
-    logout() {
+    logout(state) {
       console.log("logout");
+      const apiKey = state.importKey || "";
       setStore({
         loginData: {},
+        userInfo: {},
+        apiKey,
+        keyList: [],
       });
     },
     updateChatMenu(state, body) {

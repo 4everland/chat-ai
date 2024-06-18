@@ -126,15 +126,6 @@ export default {
       }
       this.onMenu(0);
     },
-    onLogout() {
-      this.$setStore({
-        loginData: {},
-        userInfo: {},
-        apiKey: "",
-        keyList: [],
-        importKey: null,
-      });
-    },
     async getUserInfo() {
       try {
         this.loadingUser = true;

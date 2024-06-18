@@ -3,9 +3,13 @@
     <div class="mt-9 pa-4 d-flex flex-center">
       <div class="w100p" style="max-width: 500px">
         <div class="al-c">
-          <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="40" />
+          <jazz-icon v-if="logged" :hash="userInfo.uid" :size="40" />
           <img v-else src="/img/chat/avatar.svg" width="40" />
           <span class="ml-3 fw-b fz-16">{{ userInfo.uname || "Visitor" }}</span>
+
+          <q-btn class="ml-auto" flat dense v-if="logged" @click="onLogout">
+            <img src="/img/chat/logout.svg" width="22" />
+          </q-btn>
         </div>
         <div class="row q-col-gutter-md mt-3">
           <div class="col-6" v-for="it in links" :key="it.label">
@@ -35,6 +39,9 @@ export default {
       userInfo: (s) => s.userInfo,
       apiKey: (s) => s.apiKey,
     }),
+    logged() {
+      return !!this.userInfo.uid;
+    },
     links() {
       return [
         {
@@ -54,6 +61,11 @@ export default {
           href: "https://docs.4everland.org/ai/ai-rpc",
         },
       ];
+    },
+  },
+  methods: {
+    onLogout() {
+      this.$store.commit("logout");
     },
   },
 };
