@@ -134,12 +134,7 @@ export default {
         this.inputVal = "";
         return;
       }
-      if (!this.apiKey) {
-        this.inputVal = this.inputVal.trim();
-        this.needSend = true;
-        this.$bus.emit("tip-key");
-        return;
-      }
+
       // console.log(this.trimVal);
       this.sendMsg();
     },
