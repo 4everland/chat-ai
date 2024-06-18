@@ -117,6 +117,11 @@ export default {
       this.$bus.emit("close-left");
     },
     async addMenu() {
+      if (this.chatMenus.length >= 20) {
+        return this.$alert(
+          "You’ve reached your Chat limit. Please delete Chat before proceeding."
+        );
+      }
       const row = this.chatMenus[0];
       if (!row || row.title) {
         const rand = (Math.random() + "").substring(2, 6);
