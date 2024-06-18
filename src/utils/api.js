@@ -1,6 +1,6 @@
 import Axios from "axios";
-import store from "../store";
-import router from "../router";
+import store, { setStore } from "../store";
+// import router from "../router";
 
 const {
   VITE_BASE_URL: baseURL,
@@ -84,7 +84,8 @@ async function handleError(status, config, data) {
   }
   // console.log(data);
   if (status == 401 || data.code == 401) {
-    location.href = VITE_HOME_URL + "/quick-login?type=chat";
+    // location.href = VITE_HOME_URL + "/quick-login?type=chat";
+    store.commit("logout");
   } else if (!config.noTip) {
     let msg = data.msg || "Unknown error";
     if (msg.length < 50) window.$toast(msg);

@@ -13,11 +13,11 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #006eff;
   text-decoration: none;
 }
-.link {
-  color: #006eff;
+a.plain {
+  color: inherit;
 }
 
 .max-wrap {

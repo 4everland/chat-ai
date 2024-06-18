@@ -52,6 +52,12 @@ const store = createStore({
         state[key] = data[key];
       }
     },
+    logout() {
+      console.log("logout");
+      setStore({
+        loginData: {},
+      });
+    },
     updateChatMenu(state, body) {
       let chatMenus = [...state.chatMenus];
       const { menuIdx } = state;

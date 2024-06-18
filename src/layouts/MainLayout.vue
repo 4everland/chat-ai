@@ -2,14 +2,14 @@
 </style>
 
 <script setup>
-import MainLogin from "./main-login.vue";
+// import MainLogin from "./main-login.vue";
 import ChatHeader from "./chat-header.vue";
 </script>
 
 <template>
   <div class="">
-    <main-login v-if="!token && !apiKey" />
-    <q-layout v-else view="lHh Lpr lFf" class="bg-white vh100" container>
+    <!-- <main-login v-if="!token && !apiKey" /> -->
+    <q-layout view="lHh Lpr lFf" class="bg-white vh100" container>
       <q-drawer
         class="bg-left"
         :width="290"

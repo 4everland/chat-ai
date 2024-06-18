@@ -12,7 +12,7 @@
             <a
               target="_blank"
               :href="$getHomeUrl(it.href)"
-              class="bg-left bdrs-5 pa-3 al-c hover-1"
+              class="bg-left bdrs-5 pa-3 al-c hover-1 plain"
             >
               <b class="fz-16">{{ it.label }}</b>
               <img class="ml-auto" src="/img/chat/link.svg" width="24" />

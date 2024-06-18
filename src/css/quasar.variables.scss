@@ -21,7 +21,7 @@ $dark-page: #121212;
 
 $positive: #21ba45;
 $negative: #c10015;
-$info: #cbd5e1;
+$info: #94a3b8;
 $warning: #f2c037;
 
 .q-drawer__opener {
@@ -51,10 +51,6 @@ $warning: #f2c037;
 .q-btn--dense {
   padding: 6px;
   // border-radius: 4px;
-}
-body.desktop .q-hoverable:hover > .q-focus-helper {
-  background: #e9eff5;
-  opacity: 0.6;
 }
 
 .q-field--outlined.q-field--highlighted .q-field__control:after {
