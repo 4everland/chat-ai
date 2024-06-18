@@ -14,11 +14,13 @@ import ChatInput from "./chat-input.vue";
       class="flex-1"
       @scroll="onScroll"
     >
-      <chat-list
+      <div
         :class="{
           'op-0': !showList,
         }"
-      />
+      >
+        <chat-list />
+      </div>
     </q-scroll-area>
 
     <chat-input />

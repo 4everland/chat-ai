@@ -78,6 +78,9 @@
   background: #949fba;
 }
 
+.bg-fff {
+  background: #fff;
+}
 .bg-white-5 {
   background: rgba(255, 255, 255, 0.5);
 }
@@ -139,7 +142,11 @@ $bdc: #f8fafc;
   background: #f1f5f9;
   cursor: pointer;
 }
-.bg-btn-1:hover {
+.bg-hover-1 {
+  cursor: pointer;
+}
+.bg-btn-1:hover,
+.bg-hover-1:hover {
   background: #e9eff5;
 }
 .bg-btn-on {

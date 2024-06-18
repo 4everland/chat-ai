@@ -101,6 +101,9 @@ export default {
   methods: {
     onLogin() {
       // this.$router.replace("/login");
+      if (this.$inDev) {
+        localStorage._login = 1;
+      }
       location.href = this.$getHomeUrl("/quick-login?type=chat");
     },
     onMenu(i) {

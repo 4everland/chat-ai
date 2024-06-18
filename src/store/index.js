@@ -52,7 +52,7 @@ const store = createStore({
         state[key] = data[key];
       }
     },
-    logout() {
+    logout(state) {
       console.log("logout");
       const apiKey = state.importKey?.value || "";
       setStore({

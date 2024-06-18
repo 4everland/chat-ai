@@ -48,7 +48,8 @@ export default {
     },
   },
   created() {
-    if (this.token && !this.apiKey) {
+    // && !this.apiKey
+    if (this.token) {
       this.getList();
     }
   },
