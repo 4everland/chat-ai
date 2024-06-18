@@ -26,7 +26,7 @@
         <span class="fz-16 line-1">{{ it.name }}</span>
         <span class="ml-1 op-5" v-if="it.imported">(imported)</span>
         <div
-          class="ml-auto al-c"
+          class="ml-auto al-c shrink-0 pl-5"
           :class="{
             'hover-show': it.key != apiKey,
           }"
