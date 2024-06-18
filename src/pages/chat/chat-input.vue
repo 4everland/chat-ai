@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     async onClearChat() {
-      await window.$confirm("Are you sure you want to clear the chat history?");
+      // await window.$confirm("Are you sure you want to clear the chat history?");
       // This will clean up your chat history. Unless you have exported the chat, this action is irreversible. Would you like to proceed?
       const len = this.chatLogs.length;
       this.$setStore({
