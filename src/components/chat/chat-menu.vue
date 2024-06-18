@@ -34,8 +34,8 @@ import importBtn from "./import-btn.vue";
     >
       <div class="pa-3 chat-menu-list">
         <div class="mb-1" v-for="(it, i) in chatMenus" :key="it.id">
-          <q-btn
-            class="w100p"
+          <div
+            class="pa-2 bdrs-5 bg-hover-2"
             :class="{
               'bg-btn-on': path == '/' && i == menuIdx,
             }"
@@ -43,9 +43,51 @@ import importBtn from "./import-btn.vue";
             @click="onMenu(i)"
           >
             <div class="w100p al-c">
-              <span class="line-1">{{ it.title || "New Conversation" }}</span>
+              <span class="line-1 pr-4">{{
+                it.title || "New Conversation"
+              }}</span>
+              <div
+                v-if="it.title"
+                v-show="path == '/' && i == menuIdx"
+                class="ml-auto pos-r hover-wrap1"
+              >
+                <q-icon name="more_horiz" size="18px"></q-icon>
+                <div
+                  class="pos-a right-0 bg-fff z-1000 hover-show1"
+                  style="top: 100%"
+                >
+                  <q-list style="width: 100px">
+                    <q-item
+                      clickable
+                      v-close-popup
+                      dense
+                      @click.stop="onRename(it)"
+                    >
+                      <q-item-section>
+                        <div class="al-c">
+                          <q-icon name="mode_edit"></q-icon>
+                          <span class="ml-1">Rename</span>
+                        </div>
+                      </q-item-section>
+                    </q-item>
+                    <q-item
+                      clickable
+                      v-close-popup
+                      dense
+                      @click.stop="onDel(it)"
+                    >
+                      <q-item-section class="text-red">
+                        <div class="al-c">
+                          <q-icon name="delete_outline"></q-icon>
+                          <span class="ml-1">Delete</span>
+                        </div>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+              </div>
             </div>
-          </q-btn>
+          </div>
         </div>
       </div>
     </q-scroll-area>
@@ -105,6 +147,30 @@ export default {
         localStorage._login = 1;
       }
       location.href = this.$getHomeUrl("/quick-login?type=chat");
+    },
+    async onDel(it) {
+      await this.$confirm("Are you sure to delete the chat?");
+      const chatMenus = [...this.chatMenus];
+      const idx = chatMenus.findIndex((it) => it.id == it.id);
+      await localforage.removeItem("chat-" + it.id);
+      chatMenus.splice(idx, 1);
+      this.$setStore({
+        chatMenus,
+        menuIdx: 0,
+      });
+      if (!this.chatMenus.length) {
+        this.addMenu();
+      }
+    },
+    async onRename(it) {
+      let val = await window.$prompt("Rename the chat", {
+        value: it.title,
+      });
+      val = val.trim();
+      if (!val) return;
+      this.$store.commit("updateChatMenu", {
+        title: val,
+      });
     },
     onMenu(i) {
       if (this.path != "/") {

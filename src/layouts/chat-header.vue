@@ -13,7 +13,7 @@
     </q-btn>
     <span class="fz-18 mr-auto line-1">{{ title || "Chat" }}</span>
 
-    <div class="al-c mr-1" v-show="path == '/'">
+    <div class="al-c mr-1 shrink-0" v-show="path == '/'">
       <div class="d-n">
         <input
           ref="file"

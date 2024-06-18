@@ -142,12 +142,16 @@ $bdc: #f8fafc;
   background: #f1f5f9;
   cursor: pointer;
 }
-.bg-hover-1 {
+.bg-hover-1,
+.bg-hover-2 {
   cursor: pointer;
 }
 .bg-btn-1:hover,
 .bg-hover-1:hover {
   background: #e9eff5;
+}
+.bg-hover-2:hover {
+  background: #e6e9ec;
 }
 .bg-btn-on {
   background: #eaeff4;

@@ -106,7 +106,6 @@ export default {
   },
   methods: {
     async onClearChat() {
-      // await window.$confirm("Are you sure you want to clear the chat history?");
       // This will clean up your chat history. Unless you have exported the chat, this action is irreversible. Would you like to proceed?
       const len = this.chatLogs.length;
       this.$setStore({
@@ -115,17 +114,9 @@ export default {
       this.$store.commit("updateChatMenu", {
         title: "",
       });
-      if (!len && this.chatMenus.length > 1) {
-        await this.$sleep(100);
-        const chatMenus = [...this.chatMenus];
-        const menu = chatMenus[this.menuIdx];
-        await localforage.removeItem("chat-" + menu.id);
-        chatMenus.splice(this.menuIdx, 1);
-        this.$setStore({
-          chatMenus,
-          menuIdx: 0,
-        });
-      }
+      // if (!len && this.chatMenus.length > 1) {
+      //   await this.$sleep(100);
+      // }
     },
     onEnter(e) {
       if (e.shiftKey) {

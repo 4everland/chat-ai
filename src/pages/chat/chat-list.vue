@@ -20,7 +20,7 @@ import ChatEmpty from "./chat-empty.vue";
 
 <script>
 import md5 from "md5";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
@@ -32,8 +32,11 @@ export default {
       checkModelIds: (s) => s.checkModelIds,
       chatLogs: (s) => s.chatLogs,
       apiKey: (s) => s.apiKey,
-      menuId: (s) => s.chatMenus[s.menuIdx]?.id,
     }),
+    ...mapGetters(["chatMenu"]),
+    menuId() {
+      return this.chatMenu?.id;
+    },
     checkModels() {
       return this.checkModelIds
         .map((id) => {
@@ -124,7 +127,9 @@ export default {
       if (chatLogs.length > 50) {
         //
       }
-      this.updateTitle(content);
+      if (!this.chatMenu.title) {
+        this.updateTitle(content);
+      }
       this.$setStore({
         chatLogs,
       });

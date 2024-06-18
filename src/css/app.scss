@@ -42,10 +42,12 @@ a.plain {
     opacity: 0.85;
   }
 }
-.hover-show {
+.hover-show,
+.hover-show1 {
   visibility: hidden;
 }
-.hover-wrap:hover .hover-show {
+.hover-wrap:hover .hover-show,
+.hover-wrap1:hover .hover-show1 {
   visibility: visible;
 }
 
