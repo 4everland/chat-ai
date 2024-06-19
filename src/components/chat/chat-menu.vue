@@ -153,7 +153,9 @@ export default {
     async onDel(it) {
       let data = await localforage.getItem("chat-" + it.id);
       if (data && data != "[]") {
-        await this.$confirm("Are you sure to delete the chat?");
+        let { title } = it;
+        if (title) title = `(${title})`;
+        await this.$confirm(`Are you sure to delete the chat ${title}?`);
       }
       const chatMenus = [...this.chatMenus];
       const idx = chatMenus.findIndex((it) => it.id == it.id);
