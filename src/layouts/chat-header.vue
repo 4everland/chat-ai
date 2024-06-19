@@ -68,7 +68,7 @@ export default {
     list() {
       let txt = "";
       if (this.modelLen) {
-        txt = "✖️" + this.modelLen;
+        txt = "×" + this.modelLen;
       }
       return [
         {

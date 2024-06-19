@@ -5,7 +5,7 @@ import store, { setStore } from "../store";
 const {
   VITE_BASE_URL: baseURL,
   VITE_USER_URL,
-  VITE_HOME_URL,
+  VITE_LAND_URL,
 } = import.meta.env;
 
 // console.log({ baseURL });
@@ -23,10 +23,15 @@ function getToken(isRefresh) {
 
 http.interceptors.request.use(
   (config) => {
-    config.url = config.url.replace("$auth", VITE_USER_URL);
+    config.url = config.url
+      .replace("$auth", VITE_USER_URL)
+      .replace("$land", VITE_LAND_URL);
     let token = getToken();
     if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+      if (!config.url.includes(VITE_LAND_URL)) {
+        token = "Bearer " + token;
+      }
+      config.headers["Authorization"] = token;
     }
     return config;
   },

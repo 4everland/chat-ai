@@ -9,7 +9,12 @@ import SetKey from "./set-key.vue";
         <div class="al-c mb-5">
           <jazz-icon v-if="logged" :hash="userInfo.uid" :size="40" />
           <img v-else src="/img/chat/avatar.svg" width="40" />
-          <span class="ml-3 fw-b fz-16">{{ userInfo.uname || "Visitor" }}</span>
+          <div class="ml-3 lh-1">
+            <div class="fw-b fz-16">{{ userInfo.uname || "Visitor" }}</div>
+            <div class="text-info mt-2" v-if="logged">
+              Balance: {{ userInfo.balance || "-" }} LAND
+            </div>
+          </div>
 
           <q-btn class="ml-auto" flat dense v-if="logged" @click="onLogout">
             <img src="/img/chat/logout.svg" width="22" />
@@ -73,9 +78,23 @@ export default {
       ];
     },
   },
+  created() {
+    if (this.logged) {
+      this.getBalance();
+    }
+  },
   methods: {
     onLogout() {
       this.$store.commit("logout");
+    },
+    async getBalance() {
+      const { data } = await this.$http.get("$land/assets");
+      this.$setStore({
+        userInfo: {
+          ...this.userInfo,
+          balance: (Number(data.land) / 1e18).toFixed(0),
+        },
+      });
     },
   },
 };

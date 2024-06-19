@@ -24,6 +24,7 @@ export default {
           "http://localhost:9000/login?t=" + encodeURIComponent(token);
         return;
       }
+      localStorage._login = "";
       this.$setStore({
         loginData: {
           token,
