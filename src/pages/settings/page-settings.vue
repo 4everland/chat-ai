@@ -5,7 +5,7 @@ import SetKey from "./set-key.vue";
 <template>
   <div>
     <div class="mt-9 pa-4 d-flex flex-center">
-      <div class="w100p" style="max-width: 500px">
+      <div class="w100p" style="max-width: 550px">
         <div class="al-c mb-5">
           <jazz-icon v-if="logged" :hash="userInfo.uid" :size="40" />
           <img v-else src="/img/chat/avatar.svg" width="40" />
@@ -27,7 +27,7 @@ import SetKey from "./set-key.vue";
               :href="$getHomeUrl(it.href)"
               class="bg-left bdrs-5 pa-3 al-c bg-hover-2 plain"
             >
-              <b class="fz-16">{{ it.label }}</b>
+              <span class="fz-16 label-2 fw-b">{{ it.label }}</span>
               <img class="ml-auto" src="/img/chat/link.svg" width="24" />
             </a>
           </div>

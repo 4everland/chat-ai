@@ -28,6 +28,7 @@
             max-height="360px"
             transition-show="jump-down"
             transition-hide="jump-up"
+            :offset="[50, 0]"
           >
             <div class="pa-3 pb-0 tiny-input pos-s top-0 bg-white z-10">
               <q-input

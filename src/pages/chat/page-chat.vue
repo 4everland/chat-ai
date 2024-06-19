@@ -5,7 +5,7 @@ import ChatInput from "./chat-input.vue";
 </script>
 
 <template>
-  <div class="h-flex h100p">
+  <div class="h-flex h100p" style="max-width: 1000px">
     <!-- <chat-header /> -->
 
     <q-scroll-area

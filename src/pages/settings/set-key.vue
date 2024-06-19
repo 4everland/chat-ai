@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4 bg-left bdrs-5 pa-3">
     <div class="al-c">
-      <b class="fz-16">Set default key</b>
+      <span class="fz-16 fw-b">Set default key</span>
       <q-btn
         dense
         flat

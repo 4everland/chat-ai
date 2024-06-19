@@ -53,7 +53,7 @@ import importBtn from "./import-btn.vue";
               >
                 <q-icon name="more_horiz" size="18px"></q-icon>
                 <div
-                  class="pos-a right-0 bg-fff z-1000 hover-show1"
+                  class="pos-a right-0 bg-fff bdrs-5 ov-h z-1000 hover-show1"
                   style="top: 100%"
                 >
                   <q-list style="width: 100px">

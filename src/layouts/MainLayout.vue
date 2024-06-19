@@ -30,7 +30,7 @@ import ChatHeader from "./chat-header.vue";
 
       <q-drawer
         side="right"
-        :width="290"
+        :width="path == '/' ? 290 : 0"
         v-model="showRight"
         show-if-above
         :breakpoint="900"
@@ -67,6 +67,9 @@ export default {
     }),
     asPC() {
       return this.screen.width > 900;
+    },
+    path() {
+      return this.$route.path;
     },
   },
   watch: {

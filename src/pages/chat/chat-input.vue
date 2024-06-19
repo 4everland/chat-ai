@@ -23,8 +23,8 @@
 </style>
 
 <template>
-  <div class="chat-input px-2 py-1 pt-0 al-c">
-    <q-btn class="mr-2 bg-white" dense flat @click="onClearChat">
+  <div class="chat-input px-2 py-1 pt-0 d-flex al-end">
+    <q-btn class="mr-2 bg-white mb-1" dense flat @click="onClearChat">
       <img src="/img/ic-clear.svg" width="24" class="px-2p" />
     </q-btn>
     <q-input
@@ -88,6 +88,9 @@ export default {
         this.onEnter();
         this.needSend = false;
       }
+    },
+    menuIdx() {
+      this.inputVal = "";
     },
   },
   mounted() {
