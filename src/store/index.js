@@ -41,6 +41,7 @@ const store = createStore({
     chatLogMap: {},
     isLeftOpen: false,
     isRightOpen: false,
+    asPC: true,
   },
   getters: {
     chatMenu(s) {

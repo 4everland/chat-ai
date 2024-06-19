@@ -80,8 +80,18 @@ export default {
         isRightOpen: val,
       });
     },
+    asPC(val) {
+      this.$setState({
+        asPC: val,
+      });
+    },
   },
   mounted() {
+    if (!this.asPC) {
+      this.$setState({
+        asPC: false,
+      });
+    }
     this.$bus.on("toggleMenu", (side) => {
       this.onToggle(side);
     });

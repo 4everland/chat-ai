@@ -127,6 +127,7 @@ export default {
       chatMenus: (s) => s.chatMenus,
       menuIdx: (s) => s.menuIdx,
       apiKey: (s) => s.apiKey,
+      asPC: (s) => s.asPC,
     }),
     path() {
       return this.$route.path;
@@ -179,8 +180,11 @@ export default {
       this.$setStore({
         menuIdx: i,
       });
-      this.$bus.emit("chat-focus");
+
       this.$bus.emit("close-left");
+      if (this.asPC) {
+        this.$bus.emit("chat-focus");
+      }
     },
     async addMenu() {
       if (this.chatMenus.length >= 20) {

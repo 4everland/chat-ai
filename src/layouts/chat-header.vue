@@ -44,6 +44,7 @@
 <script>
 import md5 from "md5";
 import { mapGetters, mapState } from "vuex";
+
 export default {
   computed: {
     ...mapState([
