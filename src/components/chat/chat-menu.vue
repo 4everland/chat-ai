@@ -151,7 +151,10 @@ export default {
       location.href = this.$getHomeUrl("/quick-login?type=chat");
     },
     async onDel(it) {
-      await this.$confirm("Are you sure to delete the chat?");
+      let data = await localforage.getItem("chat-" + it.id);
+      if (data && data != "[]") {
+        await this.$confirm("Are you sure to delete the chat?");
+      }
       const chatMenus = [...this.chatMenus];
       const idx = chatMenus.findIndex((it) => it.id == it.id);
       await localforage.removeItem("chat-" + it.id);
