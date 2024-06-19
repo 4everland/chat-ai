@@ -35,7 +35,7 @@ import importBtn from "./import-btn.vue";
       <div class="pa-3 chat-menu-list">
         <div class="mb-1" v-for="(it, i) in chatMenus" :key="it.id">
           <div
-            class="pa-2 bdrs-5 bg-hover-2"
+            class="pa-2 bdrs-5 bg-hover-2 hover-wrap"
             :class="{
               'bg-btn-on': path == '/' && i == menuIdx,
             }"
@@ -47,9 +47,10 @@ import importBtn from "./import-btn.vue";
                 it.title || "New Conversation"
               }}</span>
               <div
-                v-if="it.title"
-                v-show="path == '/' && i == menuIdx"
                 class="ml-auto pos-r hover-wrap1"
+                :class="{
+                  'hover-show': i != menuIdx,
+                }"
               >
                 <q-icon name="more_horiz" size="18px"></q-icon>
                 <div
@@ -75,6 +76,7 @@ import importBtn from "./import-btn.vue";
                       v-close-popup
                       dense
                       @click.stop="onDel(it)"
+                      v-show="!(chatMenus.length == 1 && chatLogs.length == 0)"
                     >
                       <q-item-section class="text-red">
                         <div class="al-c">
@@ -128,6 +130,7 @@ export default {
       menuIdx: (s) => s.menuIdx,
       apiKey: (s) => s.apiKey,
       asPC: (s) => s.asPC,
+      chatLogs: (s) => s.chatLogs,
     }),
     path() {
       return this.$route.path;

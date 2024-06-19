@@ -7,12 +7,9 @@
 
         <div class="ml-auto pr-2- bg-white- bdrs-6 al-c">
           <!-- <q-toggle v-model="checked" size="xs" /> -->
-          <img
-            src="/img/settings2.svg"
-            width="20"
-            class="hover-1 ml-1"
-            @click="onBack"
-          />
+          <q-btn dense flat @click="onBack">
+            <q-icon name="close" size="22px"></q-icon>
+          </q-btn>
         </div>
       </div>
     </div>
