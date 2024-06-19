@@ -35,7 +35,7 @@
         @click="onAct(it)"
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
-        <b class="ml-">{{ it.txt }}</b>
+        <b class="ml-1">{{ it.txt }}</b>
       </q-btn>
     </div>
   </div>
