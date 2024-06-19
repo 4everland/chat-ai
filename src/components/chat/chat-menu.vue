@@ -175,7 +175,9 @@ export default {
       });
       val = val.trim();
       if (!val) return;
+
       this.$store.commit("updateChatMenu", {
+        id: it.id,
         title: val,
       });
     },

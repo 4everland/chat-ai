@@ -78,7 +78,11 @@ const store = createStore({
     },
     updateChatMenu(state, body) {
       let chatMenus = [...state.chatMenus];
-      const { menuIdx } = state;
+      let { menuIdx } = state;
+      if (body.id) {
+        menuIdx = chatMenus.findIndex((item) => item.id == body.id);
+        if (menuIdx == -1) return;
+      }
       chatMenus[menuIdx] = {
         ...chatMenus[menuIdx],
         ...body,
