@@ -43,9 +43,7 @@ import importBtn from "./import-btn.vue";
             @click="onMenu(i)"
           >
             <div class="w100p al-c">
-              <span class="line-1 pr-4">{{
-                it.title || "New Conversation"
-              }}</span>
+              <span class="line-1 pr-4">{{ it.title || "New chat" }}</span>
               <div
                 class="ml-auto pos-r hover-wrap1"
                 :class="{

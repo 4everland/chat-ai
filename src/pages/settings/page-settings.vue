@@ -58,7 +58,7 @@ export default {
       const notMyKey = !this.keyList.find((it) => it.key == this.apiKey);
       return [
         {
-          label: "Deposit Land",
+          label: "Deposit LAND",
           href: "/billing",
         },
         {
@@ -68,7 +68,7 @@ export default {
             : "/ai-rpc/key/autoGen/" + this.apiKey,
         },
         {
-          label: "Models",
+          label: "LLMs",
           href: "/ai-rpc?tab=Models",
         },
         {
