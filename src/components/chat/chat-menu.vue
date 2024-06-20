@@ -14,13 +14,13 @@ import importBtn from "./import-btn.vue";
 <template>
   <div class="h-flex h100p">
     <div class="pa-3 al-c">
-      <a href="/">
+      <a href="/" class="al-c plain">
         <img
           src="https://dashboard.4everland.org/img/svg/logo-m.svg"
           style="height: 24px"
         />
+        <span class="fz-16 ml-1 fw-b">4EVERChat</span>
       </a>
-      <span class="fz-16 ml-1 fw-b">4EVERChat</span>
       <q-btn class="ml-auto" dense flat @click="addMenu">
         <img src="/img/edit.svg" width="22" />
         <q-tooltip> New chat </q-tooltip>
@@ -101,14 +101,15 @@ import importBtn from "./import-btn.vue";
     </div>
     <div
       v-if="apiKey"
-      class="bg-btn-1 al-c pa-3"
+      class="bg-btn-1 al-c px-4 py-3"
       @click="$router.push('/settings')"
     >
-      <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="24" />
-      <img v-else src="/img/chat/avatar.svg" width="24" />
+      <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="28" />
+      <img v-else src="/img/chat/avatar.svg" width="28" />
       <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
       <img class="ml-auto" src="/img/chat/settings.svg" width="22" />
     </div>
+    <chat-menu-social />
   </div>
 </template>
 

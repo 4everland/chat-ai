@@ -20,7 +20,7 @@
   <div class="h-flex h100p">
     <div class="pa-3">
       <div class="al-c">
-        <span class="fz-18 ml-2">Model List</span>
+        <span class="fz-18 ml-2 fw-b">Model List</span>
 
         <q-btn class="ml-auto" dense flat :loading="loadingModel">
           <q-icon name="add_circle_outline" size="22px"></q-icon>
