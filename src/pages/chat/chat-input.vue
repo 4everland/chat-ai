@@ -31,12 +31,18 @@
 
 <template>
   <div class="chat-input px-2 py-1 pt-0 d-flex al-end">
-    <q-btn class="mr-2 bg-white mb-1" dense flat @click="onClearChat">
+    <q-btn
+      vshow="chatLogs.length"
+      class="mr-2 bg-white mb-2"
+      dense
+      flat
+      @click="onClearChat"
+    >
       <img src="/img/ic-clear.svg" width="24" class="px-2p" />
     </q-btn>
     <q-input
       ref="input"
-      class="flex-1 s-mb-2 bg-input bdrs-8"
+      class="flex-1 mb-1 bg-input bdrs-8"
       outlined
       dense
       v-model="inputVal"
@@ -65,6 +71,7 @@
       </template>
     </q-input>
   </div>
+  <div class="safe-btm"></div>
 </template>
 
 <script>
