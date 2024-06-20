@@ -2,14 +2,8 @@
   <div class="mt-4 bg-left bdrs-5 pa-3">
     <div class="al-c">
       <span class="fz-16 fw-b">Set default key</span>
-      <q-btn
-        dense
-        flat
-        class="ml-auto"
-        style="border: 1px solid #94a3b8"
-        @click="$bus.emit('show-import')"
-      >
-        <img src="/img/chat/import.svg" width="16" />
+      <q-btn dense flat class="ml-auto bd-1" @click="$bus.emit('show-import')">
+        <img src="/img/chat/import.svg" width="18" />
         <span class="ml-1">Import key</span>
       </q-btn>
     </div>

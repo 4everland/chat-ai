@@ -16,8 +16,12 @@ import SetKey from "./set-key.vue";
             </div>
           </div>
 
-          <q-btn class="ml-auto" flat dense v-if="logged" @click="onLogout">
-            <img src="/img/chat/logout.svg" width="22" />
+          <q-btn class="ml-auto bd-1" flat dense @click="onSign">
+            <img
+              :src="`/img/chat/${logged ? 'sign-out' : 'sign-in'}.svg`"
+              width="20"
+            />
+            <span class="ml-2">{{ logged ? "Sign out" : "Sign in" }}</span>
           </q-btn>
         </div>
         <div class="row q-col-gutter-md" vif="logged">
@@ -84,8 +88,12 @@ export default {
     }
   },
   methods: {
-    onLogout() {
-      this.$store.commit("logout");
+    onSign() {
+      if (this.logged) {
+        this.$store.commit("logout");
+      } else {
+        this.$bus.emit("sign-in");
+      }
     },
     async getBalance() {
       const { data } = await this.$http.get("$land/assets");

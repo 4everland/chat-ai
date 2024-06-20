@@ -19,7 +19,7 @@ export default {
         // const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
         const url = this.$getHomeUrl("/quick-login?type=chat");
         // msg = `Correct API Key required, get it in [Dashboard](${url})`;
-        msg = `Please [sign in](${url}) to start the conversation.`;
+        msg = `Please [sign in to start](${url}) the conversation.`;
       }
       if (msg == "Balance not enough.") {
         const url = this.$getHomeUrl("/billing/deposit");

@@ -141,6 +141,9 @@ export default {
     if (!this.chatMenus.length) {
       this.addMenu();
     }
+    this.$bus.on("sign-in", () => {
+      this.onLogin();
+    });
   },
   methods: {
     onLogin() {

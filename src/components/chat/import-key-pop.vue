@@ -14,7 +14,7 @@
       <q-btn flat color="red" dense @click="onDel" v-if="importKey"
         >Delete</q-btn
       >
-      <q-btn flat class="bd-1 ml-auto" @click="showPop = false">Cancel</q-btn>
+      <q-btn flat class="ml-auto" @click="showPop = false">Cancel</q-btn>
       <q-btn class="ml-3" color="primary" @click="onSave">Save</q-btn>
     </div>
   </qs-popup>
