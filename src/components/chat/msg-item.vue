@@ -48,7 +48,7 @@
       </div>
 
       <div class="d-flex">
-        <div class="d-flex bd-1 bdrs-8 ov-h msg-item-con">
+        <div class="d-flex bd-1 bdc-f8 bdrs-8 ov-h msg-item-con">
           <div class="px-3 py-2 fz-15">
             <div
               :class="{

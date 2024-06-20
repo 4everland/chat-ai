@@ -1,9 +1,16 @@
 <style lang="scss">
+.bg-input {
+  background: #f1f5f9;
+}
+.q-textarea.q-field--dense .q-field__native {
+  min-height: 40px;
+  padding-top: 11px;
+}
 .chat-input {
   textarea {
     max-height: 200px;
     &::-webkit-input-placeholder {
-      color: #cbd5e1;
+      color: #94a3b8;
     }
   }
   .send-btn {
@@ -29,7 +36,7 @@
     </q-btn>
     <q-input
       ref="input"
-      class="flex-1 s-mb-2 bg-left bdrs-8"
+      class="flex-1 s-mb-2 bg-input bdrs-8"
       outlined
       dense
       v-model="inputVal"
@@ -41,7 +48,7 @@
     >
       <template #append>
         <q-btn
-          class="send-btn"
+          class="send-btn mb-1"
           round
           :color="trimVal ? 'primary' : 'info'"
           dense

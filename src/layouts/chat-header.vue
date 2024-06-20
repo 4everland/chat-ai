@@ -10,8 +10,11 @@
       @click="toggleMenu('left')"
     >
       <img src="/img/ic-menu.svg" width="22" />
+      <q-tooltip>
+        {{ isLeftOpen ? "Close sidebar" : "Open sidebar" }}
+      </q-tooltip>
     </q-btn>
-    <span class="fz-18 mr-auto line-1">{{ title || "Chat" }}</span>
+    <span class="fz-18 mr-auto line-1">{{ title }}</span>
 
     <div class="al-c mr-1 shrink-0" v-show="path == '/'">
       <div class="d-n">
@@ -36,6 +39,9 @@
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
         <b class="ml-1">{{ it.txt }}</b>
+        <q-tooltip>
+          {{ it.tip }}
+        </q-tooltip>
       </q-btn>
     </div>
   </div>
@@ -62,7 +68,7 @@ export default {
       return this.checkModelIds.length;
     },
     title() {
-      if (this.path == "/") return this.chatMenu?.title;
+      // if (this.path == "/") return this.chatMenu?.title;
       if (this.path == "/settings") return "Settings";
       return "";
     },
@@ -75,15 +81,18 @@ export default {
         {
           icon: "ic-download",
           name: "download",
+          tip: "Export chat",
         },
         {
           icon: "ic-upload",
           name: "upload",
+          tip: "Import chat",
         },
         {
           icon: "ic-robot",
           name: "model",
           txt,
+          tip: this.isRightOpen ? "Close LLMs list" : "Open LLMs list",
         },
       ];
     },

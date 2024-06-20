@@ -87,13 +87,15 @@ async function handleError(status, config, data) {
       });
     });
   }
+  let msg = data.msg || "Unknown error";
   // console.log(data);
   if (status == 401 || data.code == 401) {
     // location.href = VITE_HOME_URL + "/quick-login?type=chat";
+    msg = "Your session has expired. Please sign in to continue.";
     store.commit("logout");
-  } else if (!config.noTip) {
-    let msg = data.msg || "Unknown error";
-    if (msg.length < 50) window.$toast(msg);
+  }
+  if (!config.noTip) {
+    if (msg.length < 80) window.$toast(msg);
     else window.$alert(msg);
   }
 }

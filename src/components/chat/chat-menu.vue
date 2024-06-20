@@ -14,14 +14,16 @@ import importBtn from "./import-btn.vue";
 <template>
   <div class="h-flex h100p">
     <div class="pa-3 al-c">
-      <a href="/" class="mr-auto">
+      <a href="/">
         <img
           src="https://dashboard.4everland.org/img/svg/logo-m.svg"
           style="height: 24px"
         />
       </a>
-      <q-btn dense flat @click="addMenu">
+      <span class="fz-16 ml-1 fw-b">4EVERChat</span>
+      <q-btn class="ml-auto" dense flat @click="addMenu">
         <img src="/img/edit.svg" width="22" />
+        <q-tooltip> New chat </q-tooltip>
       </q-btn>
     </div>
     <q-scroll-area
