@@ -64,7 +64,7 @@ export default {
           .onDismiss(resolve);
       });
     };
-    window.$confirm = (message, opts) => {
+    window.$confirm = (message, opts = {}) => {
       if (opts.okLabel) {
         opts.ok = {
           label: opts.okLabel,

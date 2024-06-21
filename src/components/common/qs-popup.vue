@@ -3,7 +3,7 @@
     <q-card class="full-width" style="max-width: 500px; min-width: 300px">
       <q-card-section class="pos-s top-0 bg-white z-100 al-c">
         <slot name="title">
-          <b class="fz-18">{{ title }}</b>
+          <span class="fz-18 fw-b">{{ title }}</span>
         </slot>
         <q-btn
           v-if="!hideClose"

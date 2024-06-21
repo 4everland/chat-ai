@@ -3,19 +3,14 @@
   &.check {
     background: #fff;
     &:hover {
-      background: #f3e8ff;
-      border-color: #775da655;
-      border-color: rgb(119 93 166 / 30%);
+      background: #e9eff5;
     }
   }
   &.uncheck {
     background: #f8fafc;
-    border: 1px dashed #cbd5e1;
     color: #94a3b8;
     &:hover {
-      background: #f3e8ff;
-      border-color: #775da655;
-      border-color: rgb(119 93 166 / 35%);
+      // background: #F8FAFC;
     }
   }
 }
@@ -23,23 +18,17 @@
 
 <template>
   <div class="h-flex h100p">
-    <div class="pa-3 bdb-1 bg-pink0">
+    <div class="pa-3">
       <div class="al-c">
-        <img src="/img/model.svg" width="30" />
-        <span class="fz-18 ml-2">Model</span>
+        <span class="fz-18 ml-2 fw-b">Model List</span>
 
-        <q-btn
-          class="ml-auto"
-          color="primary"
-          dense
-          unelevated
-          :loading="loadingModel"
-        >
-          <q-icon name="add_circle_outline" size="20px"></q-icon>
+        <q-btn class="ml-auto" dense flat :loading="loadingModel">
+          <q-icon name="add_circle_outline" size="22px"></q-icon>
           <q-menu
             max-height="360px"
             transition-show="jump-down"
             transition-hide="jump-up"
+            :offset="[50, 0]"
           >
             <div class="pa-3 pb-0 tiny-input pos-s top-0 bg-white z-10">
               <q-input
@@ -75,14 +64,8 @@
           </q-menu>
         </q-btn>
 
-        <q-btn
-          v-show="!!selected.length"
-          class="ml-3 bg-white bd-1"
-          dense
-          flat
-          @click="onClear"
-        >
-          <img src="/img/trash.svg" width="22" class="px-2p" />
+        <q-btn class="ml-3" dense flat @click="onClose">
+          <q-icon name="close" size="22px"></q-icon>
         </q-btn>
       </div>
     </div>
@@ -98,7 +81,7 @@
         <div
           v-for="it in modelOptions"
           :key="it.id"
-          class="bd-1 px-3 py-2 bdrs-6 mb-3 model-item pos-r hover-wrap"
+          class="px-3 py-2 bdrs-6 mb-3 model-item pos-r hover-wrap"
           :class="checked.includes(it.id) ? 'check' : 'uncheck'"
         >
           <div class="al-c">
@@ -120,17 +103,22 @@
         </div>
       </div>
     </q-scroll-area>
+    <div class="pa-3 ta-r">
+      <q-btn v-show="!!selected.length" dense flat @click="onClear">
+        <img src="/img/trash.svg" width="22" />
+      </q-btn>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
     return {
       loadingModel: false,
-      selected: JSON.parse(localStorage.selectedModels || "[]"),
+      selected: [],
       checked: [],
       searchKey: "",
     };
@@ -139,6 +127,7 @@ export default {
     ...mapState({
       aiModels: (s) => s.aiModels,
     }),
+    ...mapGetters(["chatMenu"]),
     modelGroups() {
       const groups = [];
       for (const row of this.aiModels) {
@@ -166,33 +155,58 @@ export default {
   },
   watch: {
     checked(val) {
-      localStorage.checkedModels = JSON.stringify(val);
       // this.$emit("update-checked", val);
       this.$setState({
         checkModelIds: val,
       });
+      this.$store.commit("updateChatMenu", {
+        checkedModels: val,
+      });
     },
     selected(val) {
-      localStorage.selectedModels = JSON.stringify(val);
+      this.$store.commit("updateChatMenu", {
+        selectedModels: val,
+      });
+    },
+    "chatMenu.id"() {
+      this.onInit();
     },
   },
   created() {
+    let { model = "" } = this.$route.query;
+    this.initModel = model;
     this.onInit();
     this.$bus.on("select-model", (id) => {
       this.onSelect(id);
     });
   },
   methods: {
+    onClose() {
+      this.$bus.emit("toggleMenu", "right");
+    },
     async onInit() {
-      this.checked = JSON.parse(localStorage.checkedModels || "[]");
+      const {
+        selectedModels = [],
+        checkedModels = [],
+        modelConfig = {},
+      } = this.chatMenu || {};
+      this.$setState({
+        configMap: modelConfig,
+      });
+      this.selected = [...selectedModels];
+      this.checked = [...checkedModels];
       await this.getModels();
-      let { model } = this.$route.query;
+      let model = this.initModel;
+      if (model) {
+        this.initModel = "";
+        this.$router.replace("/");
+      }
       if (model) {
         const isIn = this.aiModels.find((it) => it.id == model);
         if (!isIn) model = "";
       }
       if (!this.selected.length && !model) {
-        model = "openai/gpt-3.5-turbo"; // "4ever/auto";
+        model = "openai/gpt-3.5-turbo"; // "4ever/auto"; //
       }
       if (model) {
         if (!this.selected.includes(model)) {

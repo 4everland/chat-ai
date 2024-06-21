@@ -1,13 +1,27 @@
 <style lang="scss">
+.bg-input {
+  background: #f1f5f9;
+}
+.q-textarea.q-field--dense .q-field__native {
+  min-height: 40px;
+  padding-top: 11px;
+}
 .chat-input {
   textarea {
     max-height: 200px;
+    &::-webkit-input-placeholder {
+      color: #94a3b8;
+    }
   }
   .send-btn {
     transform: scale(0.86);
   }
   .q-field--outlined .q-field__control {
     padding-right: 6px;
+    &::before,
+    &::after {
+      border: none !important;
+    }
   }
   .q-field__append {
     margin-top: auto;
@@ -16,15 +30,23 @@
 </style>
 
 <template>
-  <div class="chat-input pa-3 pt-0">
+  <div class="chat-input px-2 py-1 pt-0 d-flex al-end">
+    <q-btn
+      vshow="chatLogs.length"
+      class="mr-2 bg-white mb-2"
+      dense
+      flat
+      @click="onClearChat"
+    >
+      <img src="/img/ic-clear.svg" width="24" class="px-2p" />
+    </q-btn>
     <q-input
       ref="input"
-      class="flex-1 s-mb-2"
+      class="flex-1 mb-1 bg-input bdrs-8"
       outlined
       dense
       v-model="inputVal"
       autogrow
-      maxlength="1500"
       placeholder="Chat or prompt"
       @keyup.enter="onEnter"
       @focus="isFoucs = true"
@@ -32,7 +54,7 @@
     >
       <template #append>
         <q-btn
-          class="send-btn"
+          class="send-btn mb-1"
           round
           :color="trimVal ? 'primary' : 'info'"
           dense
@@ -49,6 +71,7 @@
       </template>
     </q-input>
   </div>
+  <div class="safe-btm"></div>
 </template>
 
 <script>
@@ -65,6 +88,9 @@ export default {
   computed: {
     ...mapState({
       apiKey: (s) => s.apiKey,
+      chatLogs: (s) => s.chatLogs,
+      chatMenus: (s) => s.chatMenus,
+      menuIdx: (s) => s.menuIdx,
     }),
     trimVal() {
       return this.inputVal.trim();
@@ -77,6 +103,9 @@ export default {
         this.needSend = false;
       }
     },
+    menuIdx() {
+      this.inputVal = "";
+    },
   },
   mounted() {
     const input = this.$refs.input.nativeEl;
@@ -88,8 +117,24 @@ export default {
         this.composing = false;
       }, 100);
     });
+    this.$bus.on("chat-focus", () => {
+      this.$refs.input?.focus();
+    });
   },
   methods: {
+    async onClearChat() {
+      // This will clean up your chat history. Unless you have exported the chat, this action is irreversible. Would you like to proceed?
+      const len = this.chatLogs.length;
+      this.$setStore({
+        chatLogs: [],
+      });
+      this.$store.commit("updateChatMenu", {
+        title: "",
+      });
+      // if (!len && this.chatMenus.length > 1) {
+      //   await this.$sleep(100);
+      // }
+    },
     onEnter(e) {
       if (e.shiftKey) {
         return;
@@ -99,12 +144,11 @@ export default {
         this.inputVal = "";
         return;
       }
-      if (!this.apiKey) {
-        this.inputVal = this.inputVal.trim();
-        this.needSend = true;
-        this.$bus.emit("tip-key");
-        return;
-      }
+
+      // console.log(this.trimVal);
+      this.sendMsg();
+    },
+    sendMsg() {
       this.$bus.emit("send-msg", this.trimVal);
       this.inputVal = "";
     },

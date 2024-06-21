@@ -14,10 +14,12 @@
       <q-btn flat color="red" dense @click="onDel" v-if="importKey"
         >Delete</q-btn
       >
-      <q-btn flat class="bd-1 ml-auto" @click="showPop = false">Cancel</q-btn>
+      <q-btn flat class="ml-auto" @click="showPop = false">Cancel</q-btn>
       <q-btn class="ml-3" color="primary" @click="onSave">Save</q-btn>
     </div>
   </qs-popup>
+
+  <!-- <qs-popup></qs-popup> -->
 </template>
 
 <script>
@@ -74,7 +76,7 @@ export default {
       else if (!value) msg = "API Key is required";
       else if (!/^\w{32}$/.test(value)) msg = "Invalid API Key";
       if (msg) {
-        return this.$toast(msg);
+        return window.$toast(msg);
       }
       this.$setStore({
         apiKey: value,

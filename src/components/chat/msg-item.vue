@@ -32,12 +32,12 @@
 <template>
   <div class="d-flex msg-item mb-5 hover-wrap">
     <div>
-      <jazz-icon :hash="modelId" />
+      <jazz-icon :hash="modelId" :size="26" />
     </div>
     <div class="ml-2">
       <div class="d-flex mb-1 fz-13">
         <a
-          class="al-c hover-1"
+          class="al-c hover-1 link"
           :href="$getHomeUrl('/ai-rpc/model/' + encodeURIComponent(modelId))"
           target="_blank"
         >
@@ -48,11 +48,11 @@
       </div>
 
       <div class="d-flex">
-        <div class="d-flex bd-1 bdrs-8 ov-h msg-item-con">
-          <div class="px-3 py-2 bg-con fz-16">
+        <div class="d-flex bd-1 bdc-f8 bdrs-8 ov-h msg-item-con">
+          <div class="px-3 py-2 fz-15">
             <div
               :class="{
-                'line-3': !isEpand,
+                'line-3': !isExpand,
               }"
             >
               <md-con :content="mdCon" />
@@ -60,8 +60,8 @@
           </div>
 
           <div
-            class="bdl-1 expander al-c f-center bg-bd hover-1 select-none"
-            @click="isEpand = !isEpand"
+            class="expander al-c f-center bg-left hover-1 select-none"
+            @click="isExpand = !isExpand"
           >
             <div class="h-flex ev-n">
               <img
@@ -69,7 +69,7 @@
                 width="10"
                 class="icon-up trans-200"
                 :class="{
-                  'up-down': !isEpand,
+                  'up-down': !isExpand,
                 }"
               />
               <img
@@ -78,7 +78,7 @@
                 class="icon-down trans-200"
                 :class="[
                   {
-                    'up-down': isEpand,
+                    'up-down': isExpand,
                   },
                 ]"
               />
@@ -89,6 +89,12 @@
 
       <div class="mt-1 al-c gray op-9">
         <span>~{{ tokenNum }} tokens</span>
+        <q-spinner
+          v-show="resMsg && streaming"
+          class="ml-2"
+          size="14px"
+          :thickness="2"
+        />
         <div class="al-c ml-2 hover-show">
           <img
             v-show="!streaming"
@@ -118,7 +124,7 @@
 
 <script>
 import { debounce } from "quasar";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import mixin from "./msg-item";
 
 export default {
@@ -136,6 +142,7 @@ export default {
       configMap: (s) => s.configMap,
       apiKey: (s) => s.apiKey,
     }),
+    ...mapGetters(["chatMenu"]),
     modelRow() {
       return this.aiModels.find((it) => it.id == this.modelId);
     },
@@ -160,12 +167,17 @@ export default {
   },
   data() {
     return {
-      isEpand: false,
+      isExpand: false,
     };
   },
   watch: {
     resMsg() {
       this.setNewContent();
+    },
+    isExpand() {
+      this.updateLog({
+        expand: this.isExpand,
+      });
     },
   },
   created() {
@@ -180,6 +192,10 @@ export default {
     if (!this.info.content) {
       this.fetchAi();
     }
+    this.isExpand = !!this.info.expand;
+  },
+  beforeUnmount() {
+    this.closeAi();
   },
   methods: {
     onDel() {
@@ -199,8 +215,9 @@ export default {
       // console.log(this.info.id, this.resMsg);
       this.updateLog({
         content: this.resMsg,
-        spend: Date.now() - this.beginAt,
+        duration: Date.now() - this.beginAt,
         tokens: this.tokenNum,
+        expand: this.isExpand,
       });
     },
     updateLog(body) {

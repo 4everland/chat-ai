@@ -1,10 +1,7 @@
 <template>
   <div class="al-c max-wrap py-3">
     <a href="/" class="mr-auto">
-      <img
-        src="https://dashboard.4everland.org/img/svg/logo-m.svg"
-        style="height: 24px"
-      />
+      <img src="/img/logo-m.svg" style="height: 24px" />
     </a>
     <!-- <q-btn href="https://docs.4everland.org/" target="_blank" flat dense
       >Docs</q-btn
@@ -62,7 +59,7 @@ export default {
     }),
   },
   created() {
-    if (this.token) {
+    if (this.token && !this.userInfo.uid) {
       this.getUserInfo();
     }
   },

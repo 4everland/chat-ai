@@ -1,11 +1,11 @@
 import Axios from "axios";
-import store from "../store";
-import router from "../router";
+import store, { setStore } from "../store";
+// import router from "../router";
 
 const {
   VITE_BASE_URL: baseURL,
   VITE_USER_URL,
-  VITE_HOME_URL,
+  VITE_LAND_URL,
 } = import.meta.env;
 
 // console.log({ baseURL });
@@ -23,10 +23,15 @@ function getToken(isRefresh) {
 
 http.interceptors.request.use(
   (config) => {
-    config.url = config.url.replace("$auth", VITE_USER_URL);
+    config.url = config.url
+      .replace("$auth", VITE_USER_URL)
+      .replace("$land", VITE_LAND_URL);
     let token = getToken();
     if (token) {
-      config.headers["Authorization"] = "Bearer " + token;
+      if (!config.url.includes(VITE_LAND_URL)) {
+        token = "Bearer " + token;
+      }
+      config.headers["Authorization"] = token;
     }
     return config;
   },
@@ -82,12 +87,15 @@ async function handleError(status, config, data) {
       });
     });
   }
+  let msg = data.msg || "Unknown error";
   // console.log(data);
   if (status == 401 || data.code == 401) {
-    location.href = VITE_HOME_URL + "/quick-login?type=chat";
-  } else if (!config.noTip) {
-    let msg = data.msg || "Unknown error";
-    if (msg.length < 50) window.$toast(msg);
+    // location.href = VITE_HOME_URL + "/quick-login?type=chat";
+    msg = "Your session has expired. Please sign in to continue.";
+    store.commit("logout");
+  }
+  if (!config.noTip) {
+    if (msg.length < 80) window.$toast(msg);
     else window.$alert(msg);
   }
 }

@@ -29,7 +29,6 @@ export default {
 
 <style lang="scss" >
 .md-con {
-  font-size: 15px;
   line-height: 1.4;
   word-break: break-word;
   pre {

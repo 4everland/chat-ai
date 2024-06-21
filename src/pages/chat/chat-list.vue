@@ -1,4 +1,10 @@
+<script setup>
+import ChatEmpty from "./chat-empty.vue";
+</script>
+
 <template>
+  <chat-empty v-if="!showChatLogs.length" />
+
   <div class="pa-4">
     <template v-for="it in showChatLogs" :key="it.id">
       <msg-item
@@ -14,7 +20,7 @@
 
 <script>
 import md5 from "md5";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   data() {
@@ -27,6 +33,10 @@ export default {
       chatLogs: (s) => s.chatLogs,
       apiKey: (s) => s.apiKey,
     }),
+    ...mapGetters(["chatMenu"]),
+    menuId() {
+      return this.chatMenu?.id;
+    },
     checkModels() {
       return this.checkModelIds
         .map((id) => {
@@ -47,9 +57,27 @@ export default {
     chatLogs() {
       this.storeLogs();
     },
-    async apiKey() {
-      let data = await localforage.getItem("chat-" + this.apiKey);
-      data = JSON.parse(data);
+    async menuId() {
+      this.setLogs();
+    },
+  },
+  created() {
+    this.$bus.on("send-msg", (msg) => {
+      console.log(msg);
+      this.onSendMsg(msg);
+    });
+  },
+  unmounted() {
+    this.$bus.off("send-msg");
+  },
+  methods: {
+    async setLogs() {
+      const menuId = this.menuId;
+      let data = await localforage.getItem("chat-" + menuId);
+      if (menuId != this.menuId) return;
+      if (data) {
+        data = JSON.parse(data);
+      }
       if (!data) data = [];
       this.inRestore = true;
       this.$setStore({
@@ -57,31 +85,22 @@ export default {
       });
       this.$bus.emit("chat-to-btm");
     },
-  },
-  created() {
-    this.$bus.on("send-msg", (msg) => {
-      this.onSendMsg(msg);
-    });
-    if (this.apiKey && this.chatLogs?.length && !localStorage._storeLogs) {
-      localStorage._storeLogs = 1;
-      this.storeLogs();
-    }
-  },
-  unmounted() {
-    this.$bus.off("send-msg");
-  },
-  methods: {
     storeLogs() {
       if (this.inRestore) {
         this.inRestore = false;
         return;
       }
       const data = JSON.stringify(this.chatLogs);
-      localforage.setItem("chat-" + this.apiKey, data);
+      localforage.setItem("chat-" + this.menuId, data);
     },
     getMsgId(mm = "") {
       const rand = (Math.random() + "").substring(0, 4);
       return "msg-" + md5(Date.now() + rand + mm).substring(0, 8);
+    },
+    updateTitle(title) {
+      this.$store.commit("updateChatMenu", {
+        title,
+      });
     },
     onSendMsg(content) {
       const id = this.getMsgId();
@@ -93,6 +112,7 @@ export default {
         },
       ];
       const jobModelIds = [];
+      const isExpand = this.checkModels.length == 1;
       for (const row of this.checkModels) {
         jobModelIds.push(row.id);
         list.push({
@@ -100,11 +120,15 @@ export default {
           id: this.getMsgId(row.id),
           model: row.id,
           createAt: Date.now() + 10,
+          expand: isExpand,
         });
       }
       const chatLogs = [...this.chatLogs, ...list];
       if (chatLogs.length > 50) {
         //
+      }
+      if (!this.chatMenu.title) {
+        this.updateTitle(content);
       }
       this.$setStore({
         chatLogs,

@@ -16,8 +16,10 @@ export default {
   methods: {
     onErr(msg) {
       if (msg == "Key not found.") {
-        const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
-        msg = `Correct API Key required, get it in [Dashboard](${url})`;
+        // const url = this.$getHomeUrl("/ai-rpc?tab=Keys");
+        const url = this.$getHomeUrl("/quick-login?type=chat");
+        // msg = `Correct API Key required, get it in [Dashboard](${url})`;
+        msg = `Please [sign in to start](${url}) the conversation.`;
       }
       if (msg == "Balance not enough.") {
         const url = this.$getHomeUrl("/billing/deposit");
@@ -72,6 +74,7 @@ export default {
               this.onErr(json.error.message);
               return;
             }
+            // if (json.usage) console.log(json);
             const text = json.choices[0].delta?.content || "";
             if (text) {
               this.tokenNum++;
@@ -89,6 +92,7 @@ export default {
           if (typeof e.data == "string") {
             try {
               const data = JSON.parse(e.data);
+
               msg = data.error.message || data.error.code;
             } catch (error) {
               msg = e.data.trim() || msg;

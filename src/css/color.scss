@@ -78,6 +78,9 @@
   background: #949fba;
 }
 
+.bg-fff {
+  background: #fff;
+}
 .bg-white-5 {
   background: rgba(255, 255, 255, 0.5);
 }
@@ -112,19 +115,12 @@
   background: #808080;
 }
 
-.bg-pink0 {
-  background: #fcf9ff;
-}
-.bg-pink1 {
-  background: #f3e8ff;
-}
-
-$bdc: #cbd5e1;
+$bdc: #94a3b8;
 
 .bg-bd {
   background: $bdc;
 }
-.q-field--outlined .q-field__control:before,
+
 .bd-1 {
   border: 1px solid $bdc;
 }
@@ -137,4 +133,29 @@ $bdc: #cbd5e1;
 }
 .bdb-1 {
   border-bottom: 1px solid $bdc;
+}
+.bdc-f8 {
+  border-color: #f8fafc;
+}
+
+.bg-left {
+  background: #f8fafc;
+}
+.bg-btn-1 {
+  background: #f1f5f9;
+  cursor: pointer;
+}
+.bg-hover-1,
+.bg-hover-2 {
+  cursor: pointer;
+}
+.bg-btn-1:hover,
+.bg-hover-1:hover {
+  background: #e9eff5;
+}
+.bg-hover-2:hover {
+  background: #e6e9ec;
+}
+.bg-btn-on {
+  background: #eaeff4;
 }

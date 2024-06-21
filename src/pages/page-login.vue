@@ -11,11 +11,23 @@ export default {
     }),
   },
   created() {
-    const { t: token, ...query } = this.$route.query;
+    let { t, token, ...query } = this.$route.query;
+    if (!token) token = t;
+    token = decodeURIComponent(token);
     if (token) {
+      if (
+        this.$inDev &&
+        !localStorage._login &&
+        !/localhost/.test(location.host)
+      ) {
+        location.href =
+          "http://localhost:9000/login?t=" + encodeURIComponent(token);
+        return;
+      }
+      localStorage._login = "";
       this.$setStore({
         loginData: {
-          token: decodeURIComponent(token),
+          token,
         },
       });
     }

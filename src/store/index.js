@@ -7,11 +7,12 @@ const storInit = {
   loginData: {},
   userInfo: {},
   aiModels: [],
+  chatMenus: [],
+  menuIdx: 0,
   chatLogs: [],
   keyList: [],
   apiKey: "",
   importKey: null,
-  configMap: {},
 };
 const storState = {
   ...storInit,
@@ -34,15 +35,61 @@ const store = createStore({
     showProgress: false,
     checkModelIds: [],
     jobModelIds: [],
+    configMap: {},
     configModelId: null, // for settings
     configKeys,
+    chatLogMap: {},
+    isLeftOpen: false,
+    isRightOpen: false,
+    asPC: true,
   },
-  getters: {},
+  getters: {
+    chatMenu(s) {
+      return s.chatMenus[s.menuIdx];
+    },
+  },
   mutations: {
     [SET_DATA](state, data) {
       for (const key in data) {
         state[key] = data[key];
       }
+    },
+    logout(state) {
+      console.log("logout");
+      const apiKey = state.importKey?.value || "";
+      setStore({
+        loginData: {},
+        userInfo: {},
+        apiKey,
+        keyList: [],
+        // importKey: null,
+      });
+    },
+    updateLogMap(state, logList) {
+      const { chatLogMap, chatMenus, menuIdx } = state;
+      const { id } = chatMenus[menuIdx] || {};
+      if (!id) return console.log("no chat", id);
+      setState({
+        chatLogMap: {
+          ...chatLogMap,
+          [id]: logList,
+        },
+      });
+    },
+    updateChatMenu(state, body) {
+      let chatMenus = [...state.chatMenus];
+      let { menuIdx } = state;
+      if (body.id) {
+        menuIdx = chatMenus.findIndex((item) => item.id == body.id);
+        if (menuIdx == -1) return;
+      }
+      chatMenus[menuIdx] = {
+        ...chatMenus[menuIdx],
+        ...body,
+      };
+      setStore({
+        chatMenus,
+      });
     },
     updateChatLog(state, body) {
       const chatLogs = [...state.chatLogs];

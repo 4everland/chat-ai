@@ -1,17 +1,12 @@
 <script setup>
 import ChatList from "./chat-list.vue";
 import ChatInput from "./chat-input.vue";
+// import ChatHeader from "./chat-header.vue";
 </script>
 
 <template>
-  <div class="h-flex h100p">
-    <div class="al-c pa-3 bdb-1">
-      <span class="fz-18 mr-auto">Chat</span>
-      <choose-key-btn />
-      <q-btn class="ml-3 bg-white bd-1" dense flat @click="onClearChat">
-        <img src="/img/ic-clear.svg" width="20" class="px-2p" />
-      </q-btn>
-    </div>
+  <div class="h-flex h100p m-auto" style="max-width: 900px">
+    <!-- <chat-header /> -->
 
     <q-scroll-area
       ref="chatList"
@@ -19,11 +14,13 @@ import ChatInput from "./chat-input.vue";
       class="flex-1"
       @scroll="onScroll"
     >
-      <chat-list
+      <div
         :class="{
           'op-0': !showList,
         }"
-      />
+      >
+        <chat-list />
+      </div>
     </q-scroll-area>
 
     <chat-input />
@@ -74,11 +71,6 @@ export default {
     },
     onScroll(e) {
       // console.log(e.verticalPosition);
-    },
-    onClearChat() {
-      this.$setStore({
-        chatLogs: [],
-      });
     },
   },
 };

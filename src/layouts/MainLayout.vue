@@ -2,53 +2,43 @@
 </style>
 
 <script setup>
-import MainHeader from "./main-header.vue";
-import MainLogin from "./main-login.vue";
+// import MainLogin from "./main-login.vue";
+import ChatHeader from "./chat-header.vue";
 </script>
 
 <template>
-  <div class="px-4">
-    <main-header />
-
-    <main-login v-if="!token && !apiKey" />
-    <q-layout
-      v-else
-      view="lHh Lpr lFf"
-      class="bd-1 bdrs-8 bg-white max-wrap"
-      container
-      :style="{
-        height: 'calc(100vh - 56px - 12px)',
-      }"
-    >
+  <div class="">
+    <!-- <main-login v-if="!token && !apiKey" /> -->
+    <q-layout view="lHh Lpr lFf" class="bg-white vh100" container>
       <q-drawer
-        :width="320"
-        v-model="isOpen"
+        class="bg-left"
+        :width="290"
+        v-model="showLeft"
         show-if-above
-        bordered
         :breakpoint="900"
-        style="background: #f8f3fe"
       >
-        <model-list v-show="!configModelId" />
-        <model-settings v-show="!!configModelId" />
+        <chat-menu />
       </q-drawer>
-
       <q-page-container>
-        <div class="d-flex h100p">
-          <div class="h100p pa-1 bdr-1 al-c f-center hover-1" @click="onToggle">
-            <img
-              src="/img/ic-left.svg"
-              class="d-b"
-              width="6px"
-              :class="{
-                'up-down': !isOpen,
-              }"
-            />
-          </div>
-          <div class="h100p flex-1">
+        <div class="h-flex h100p">
+          <chat-header />
+          <div class="flex-1">
             <router-view />
           </div>
         </div>
       </q-page-container>
+
+      <q-drawer
+        side="right"
+        :width="path == '/' ? 290 : 0"
+        v-model="showRight"
+        show-if-above
+        :breakpoint="900"
+        style="background: #f2f5f9"
+      >
+        <model-list v-show="!configModelId" />
+        <model-settings v-show="!!configModelId" />
+      </q-drawer>
     </q-layout>
   </div>
 
@@ -57,11 +47,16 @@ import MainLogin from "./main-login.vue";
 
 <script>
 import { mapState } from "vuex";
+import { useQuasar } from "quasar";
 
 export default {
   data() {
+    const { screen } = useQuasar();
+    const isOpen = screen.width > 900;
     return {
-      isOpen: false,
+      screen,
+      showLeft: isOpen,
+      showRight: isOpen,
     };
   },
   computed: {
@@ -70,19 +65,53 @@ export default {
       apiKey: (s) => s.apiKey,
       configModelId: (s) => s.configModelId,
     }),
+    asPC() {
+      return this.screen.width > 900;
+    },
+    path() {
+      return this.$route.path;
+    },
+  },
+  watch: {
+    showLeft(val) {
+      this.$setState({
+        isLeftOpen: val,
+      });
+    },
+    showRight(val) {
+      this.$setState({
+        isRightOpen: val,
+      });
+    },
+    asPC(val) {
+      this.$setState({
+        asPC: val,
+      });
+    },
   },
   mounted() {
-    this.$bus.on("toggleMenu", () => {
-      this.onToggle();
+    if (!this.asPC) {
+      this.$setState({
+        asPC: false,
+      });
+    }
+    this.$bus.on("toggleMenu", (side) => {
+      this.onToggle(side);
+    });
+    this.$bus.on("close-left", () => {
+      if (!this.asPC) this.showLeft = false;
+    });
+    this.$setState({
+      isLeftOpen: this.showLeft,
+      isRightOpen: this.showRight,
     });
   },
   methods: {
-    onToggle() {
-      this.isOpen = !this.isOpen;
-    },
-    onClose() {
-      if (this.$q.screen.xs) {
-        this.isOpen = false;
+    onToggle(side) {
+      if (side == "right") {
+        this.showRight = !this.showRight;
+      } else {
+        this.showLeft = !this.showLeft;
       }
     },
   },

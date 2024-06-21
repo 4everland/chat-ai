@@ -21,7 +21,7 @@ $dark-page: #121212;
 
 $positive: #21ba45;
 $negative: #c10015;
-$info: #cbd5e1;
+$info: #94a3b8;
 $warning: #f2c037;
 
 .q-drawer__opener {
@@ -48,6 +48,10 @@ $warning: #f2c037;
     }
   }
 }
+.q-btn--dense {
+  padding: 6px;
+  // border-radius: 4px;
+}
 
 .q-field--outlined.q-field--highlighted .q-field__control:after {
   border-width: 1px;
@@ -57,8 +61,21 @@ $warning: #f2c037;
     height: 30px;
   }
 }
+.no-bd {
+  .q-field--outlined .q-field__control:before {
+    border: none;
+  }
+}
 .q-input.ta-r {
   input {
     text-align: right;
   }
+}
+
+.q-scrollarea.w100p .q-scrollarea__content {
+  width: 100%;
+}
+
+.color-1 {
+  color: $primary;
 }
