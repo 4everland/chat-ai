@@ -172,7 +172,7 @@ export default {
         await this.$confirm(`Are you sure to delete the chat ${title}?`);
       }
       const chatMenus = [...this.chatMenus];
-      const idx = chatMenus.findIndex((it) => it.id == it.id);
+      const idx = chatMenus.findIndex((p) => p.id == it.id);
       await localforage.removeItem("chat-" + it.id);
       chatMenus.splice(idx, 1);
       this.$setStore({
