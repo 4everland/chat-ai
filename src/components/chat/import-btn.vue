@@ -53,9 +53,7 @@ export default {
   },
   created() {
     // && !this.apiKey
-    if (this.token) {
-      this.getList();
-    }
+    this.getList();
   },
   methods: {
     setKey(apiKey) {
@@ -85,7 +83,9 @@ export default {
     async getList() {
       if (!this.token) return;
       try {
-        const { data } = await this.$http.get("/rpc/ai/manager/keys");
+        const { data } = await this.$http.get("/rpc/ai/manager/keys", {
+          noTip: true,
+        });
         this.$setStore({
           keyList: data.items,
         });

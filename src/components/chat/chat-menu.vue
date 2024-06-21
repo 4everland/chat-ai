@@ -114,6 +114,9 @@ import importBtn from "./import-btn.vue";
       <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
       <img class="ml-auto" src="/img/chat/settings.svg" width="22" />
     </div>
+    <div class="px-4" v-if="apiKey">
+      <div style="border-top: 1px solid #e2e8f0"></div>
+    </div>
     <chat-menu-social />
   </div>
 </template>

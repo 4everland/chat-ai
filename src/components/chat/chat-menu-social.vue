@@ -1,7 +1,4 @@
 <template>
-  <div class="px-4">
-    <div style="border-top: 1px solid #e2e8f0"></div>
-  </div>
   <div class="al-c bg-f1">
     <a
       v-for="it in list"
