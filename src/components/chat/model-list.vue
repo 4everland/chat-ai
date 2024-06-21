@@ -20,7 +20,7 @@
   <div class="h-flex h100p">
     <div class="pa-3">
       <div class="al-c">
-        <span class="fz-18 ml-2 fw-b">Model List</span>
+        <span class="fz-16 ml-2 fw-b">Model List</span>
 
         <q-btn class="ml-auto" dense flat :loading="loadingModel">
           <q-icon name="add_circle_outline" size="22px"></q-icon>
@@ -103,9 +103,17 @@
         </div>
       </div>
     </q-scroll-area>
-    <div class="pa-3 ta-r">
-      <q-btn v-show="!!selected.length" dense flat @click="onClear">
+    <div class="pa-3 al-c">
+      <chat-export v-if="!asPC"></chat-export>
+      <q-btn
+        class="ml-auto"
+        v-show="!!selected.length"
+        dense
+        flat
+        @click="onClear"
+      >
         <img src="/img/trash.svg" width="22" />
+        <!-- <q-tooltip>Clear Models</q-tooltip> -->
       </q-btn>
     </div>
   </div>
@@ -126,6 +134,7 @@ export default {
   computed: {
     ...mapState({
       aiModels: (s) => s.aiModels,
+      asPC: (s) => s.asPC,
     }),
     ...mapGetters(["chatMenu"]),
     modelGroups() {

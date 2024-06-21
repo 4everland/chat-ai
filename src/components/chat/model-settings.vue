@@ -1,6 +1,6 @@
 <template>
   <div class="h-flex h100p no-bd" v-if="curItem">
-    <div class="pa-3 bdb-1 bg-pink0">
+    <div class="pa-3 bg-pink0">
       <div class="al-c">
         <jazz-icon hash="test" :size="30"></jazz-icon>
         <span class="fz-15 ml-2">{{ curItem.name }}</span>

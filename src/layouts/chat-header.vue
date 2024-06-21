@@ -17,15 +17,7 @@
     <span class="fz-18 mr-auto line-1">{{ title }}</span>
 
     <div class="al-c mr-1 shrink-0" v-show="path == '/'">
-      <div class="d-n">
-        <input
-          ref="file"
-          type="file"
-          accept="application/json"
-          @input="onUploadFile"
-        />
-      </div>
-      <!-- <choose-key-btn /> -->
+      <chat-export v-if="asPC" />
       <q-btn
         class="ml-3"
         :class="{
@@ -38,7 +30,7 @@
         @click="onAct(it)"
       >
         <img :src="`/img/${it.icon}.svg`" width="22" />
-        <b class="ml-1">{{ it.txt }}</b>
+        <b class="ml-1" v-if="it.txt">{{ it.txt }}</b>
         <q-tooltip>
           {{ it.tip }}
         </q-tooltip>
@@ -48,7 +40,6 @@
 </template>
 
 <script>
-import md5 from "md5";
 import { mapGetters, mapState } from "vuex";
 
 export default {
@@ -59,6 +50,7 @@ export default {
       "chatLogs",
       "chatMenus",
       "checkModelIds",
+      "asPC",
     ]),
     ...mapGetters(["chatMenu"]),
     path() {
@@ -79,16 +71,6 @@ export default {
       }
       return [
         {
-          icon: "ic-download",
-          name: "download",
-          tip: "Export chat",
-        },
-        {
-          icon: "ic-upload",
-          name: "upload",
-          tip: "Import chat",
-        },
-        {
           icon: "ic-robot",
           name: "model",
           txt,
@@ -107,53 +89,6 @@ export default {
     onAct({ name }) {
       if (name == "model") {
         this.toggleMenu("right");
-      } else if (name == "download") {
-        this.doDownload();
-      } else if (name == "upload") {
-        this.$refs.file.click();
-      }
-    },
-    doDownload() {
-      const json = JSON.stringify(
-        {
-          ...this.chatMenu,
-          time: Date.now(),
-          logs: this.chatLogs,
-        },
-        null,
-        "  "
-      );
-      const name = "4ever-chat " + new Date().format("date");
-      window.download(json, name + ".json", "application/json");
-    },
-    onUploadFile(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target.result; // 读取到的文件内容
-        this.setConfig(content);
-      };
-      reader.readAsText(file);
-    },
-    setConfig(content) {
-      try {
-        const { logs, ...menu } = JSON.parse(content);
-        if (!Array.isArray(logs) || !menu.id) {
-          throw new Error("Unsupported config");
-        }
-        menu.id = menu.id + "-" + md5(Date.now()).substring(0, 4);
-        this.$setStore({
-          chatMenus: [menu, ...this.chatMenus],
-          menuIdx: 0,
-        });
-        setTimeout(() => {
-          this.$setStore({
-            chatLogs: logs,
-          });
-        }, 100);
-      } catch (error) {
-        window.$toast(error.message);
       }
     },
   },

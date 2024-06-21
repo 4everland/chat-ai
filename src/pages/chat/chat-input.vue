@@ -30,7 +30,7 @@
 </style>
 
 <template>
-  <div class="chat-input px-2 py-1 pt-0 d-flex al-end">
+  <div class="chat-input px-2 d-flex al-end">
     <q-btn
       vshow="chatLogs.length"
       class="mr-2 bg-white mb-2"
@@ -70,6 +70,9 @@
         </q-btn>
       </template>
     </q-input>
+  </div>
+  <div class="pa-1 mb-2 ta-c fz-14 text-info">
+    4EVERChat can make mistakes. Check important info.
   </div>
   <div class="safe-btm"></div>
 </template>
