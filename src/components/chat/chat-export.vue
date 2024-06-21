@@ -1,10 +1,12 @@
 <template>
   <div class="al-c">
     <q-btn
-      class="ml-3"
+      :class="{
+        'ml-3': i > 0,
+      }"
       flat
       dense
-      v-for="it in list"
+      v-for="(it, i) in list"
       :key="it.icon"
       @click="onAct(it)"
     >
