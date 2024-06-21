@@ -9,7 +9,14 @@ import ChatHeader from "./chat-header.vue";
 <template>
   <div class="">
     <!-- <main-login v-if="!token && !apiKey" /> -->
-    <q-layout view="lHh Lpr lFf" class="bg-white vh100" container>
+    <q-layout
+      view="lHh Lpr lFf"
+      class="bg-white"
+      :style="{
+        height: screen.height + 'px',
+      }"
+      container
+    >
       <q-drawer
         class="bg-left"
         :width="290"
@@ -23,6 +30,7 @@ import ChatHeader from "./chat-header.vue";
         <div class="h-flex h100p">
           <chat-header />
           <div class="flex-1">
+            <!-- <div>{{ screen.height }}</div> -->
             <router-view />
           </div>
         </div>
