@@ -94,7 +94,12 @@ import importBtn from "./import-btn.vue";
       </div>
     </q-scroll-area>
     <div class="pa-3">
-      <q-btn v-if="!token" color="primary" class="w100p" @click="onLogin"
+      <q-btn
+        unelevated
+        v-if="!token"
+        color="primary"
+        class="w100p"
+        @click="onLogin"
         >Sign in</q-btn
       >
       <import-btn />

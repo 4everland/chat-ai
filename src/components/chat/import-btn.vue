@@ -1,6 +1,10 @@
 <template>
   <div class="mt-3" v-show="!apiKey">
-    <q-btn color="info" class="w100p" @click="$bus.emit('show-import')"
+    <q-btn
+      unelevated
+      color="info"
+      class="w100p"
+      @click="$bus.emit('show-import')"
       >Import a key</q-btn
     >
   </div>
