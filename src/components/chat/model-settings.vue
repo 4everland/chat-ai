@@ -44,7 +44,7 @@
                 <q-btn icon="info_outline" flat size="xs" dense>
                   <q-tooltip
                     max-width="300px"
-                    class="bg-white gray fz-14"
+                    class="fz-14"
                     anchor="center right"
                     self="top left"
                   >
