@@ -113,7 +113,9 @@
         @click="onClear"
       >
         <img src="/img/trash.svg" width="22" />
-        <!-- <q-tooltip>Clear Models</q-tooltip> -->
+        <q-tooltip anchor="center start" self="center end"
+          >Clear Models</q-tooltip
+        >
       </q-btn>
     </div>
   </div>

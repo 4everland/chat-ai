@@ -39,6 +39,7 @@
       @click="onClearChat"
     >
       <img src="/img/ic-clear.svg" width="24" class="px-2p" />
+      <q-tooltip>Clear chat</q-tooltip>
     </q-btn>
     <q-input
       ref="input"
