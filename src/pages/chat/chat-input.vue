@@ -43,18 +43,20 @@
     </q-btn>
     <div class="flex-1 mb-1 bg-f2 bdrs-8" style="width: 200px">
       <div class="pa-2 ov-a" v-if="imgList.length">
-        <div class="d-flex">
-          <div
-            class="pos-r bd-1 bdrs-5 ov-h mr-2"
-            v-for="(it, i) in imgList"
-            :key="i"
-          >
-            <img :src="it.src" height="90px" class="d-b" />
-            <div class="pos-a top-0 right-0 m-1 hover-1">
-              <img src="/img/chat/x-circle.svg" width="18" />
+        <div class="nowrap">
+          <div class="d-flex">
+            <div
+              class="pos-r bd-1 bdrs-5 ov-h mr-2"
+              v-for="(it, i) in imgList"
+              :key="i"
+            >
+              <img :src="it.src" height="90px" class="d-b" />
+              <div class="pos-a top-0 right-0 m-1 hover-1" @click="onDel(i)">
+                <img src="/img/chat/x-circle.svg" width="18" />
+              </div>
             </div>
+            <div class="pr-1"></div>
           </div>
-          <div class="pr-1"></div>
         </div>
       </div>
       <q-input
@@ -164,12 +166,18 @@ export default {
     });
   },
   methods: {
+    onDel(i) {
+      this.imgList.splice(i, 1);
+    },
     onUpload(e) {
       const files = e.target.files;
       for (const file of files) {
         const reader = new FileReader();
         reader.onload = (e) => {
           // console.log(e.target.result);
+          this.imgList.push({
+            src: e.target.result,
+          });
         };
         reader.readAsDataURL(file);
       }
