@@ -217,13 +217,16 @@ export default {
         if (!isIn) model = "";
       }
       if (!this.selected.length && !model) {
-        model = "openai/gpt-3.5-turbo"; // "4ever/auto"; //
+        model = "openai/gpt-3.5-turbo,openchat/openchat-7b:free"; // "4ever/auto"; //
       }
-      if (model) {
-        if (!this.selected.includes(model)) {
-          this.onSelect(model);
-        } else if (!this.checked.includes(model)) {
-          this.checked = [...this.checked, model];
+      const marr = model.split(",");
+      for (const item of marr) {
+        if (item) {
+          if (!this.selected.includes(item)) {
+            this.onSelect(item);
+          } else if (!this.checked.includes(item)) {
+            this.checked = [...this.checked, item];
+          }
         }
       }
     },
