@@ -42,7 +42,7 @@ import ChatHeader from "./chat-header.vue";
         v-model="showRight"
         show-if-above
         :breakpoint="900"
-        style="background: #f2f5f9"
+        class="bg-f2"
       >
         <model-list v-show="!configModelId" />
         <model-settings v-show="!!configModelId" />
