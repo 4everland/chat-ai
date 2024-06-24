@@ -32,7 +32,7 @@
 <template>
   <div class="chat-input px-2 d-flex al-end">
     <q-btn
-      vshow="chatLogs.length"
+      :disable="!chatLogs.length"
       class="mr-2 bg-white mb-2"
       dense
       flat
