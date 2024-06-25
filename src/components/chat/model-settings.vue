@@ -23,8 +23,8 @@
       }"
     >
       <div class="pa-4">
-        <div class="mb-1" v-for="it in configKeys" :key="it.name">
-          <div v-if="!it.max">
+        <div class="mb-" v-for="it in configKeys" :key="it.name">
+          <div class="mb-2" v-if="!it.max">
             <div class="label-1">{{ it.label }}</div>
             <q-input
               v-model="curForm[it.name]"
@@ -45,10 +45,10 @@
                   <q-tooltip
                     max-width="300px"
                     class="fz-14"
-                    anchor="center right"
                     self="top left"
+                    :offset="[0, 0]"
                   >
-                    <span class="fz-1">{{ it.tip }}</span>
+                    <div class="">{{ it.tip }}</div>
                   </q-tooltip>
                 </q-btn>
               </div>
@@ -59,9 +59,11 @@
                 :step="it.step || 1"
                 :name="it.name"
                 dense
-                track-size="3px"
-                thumb-size="12px"
+                track-size="4px"
+                thumb-size="14px"
                 thumb-color="white"
+                inner-track-color="white"
+                color="info"
                 @update:model-value="onSlide(it, $event)"
               />
             </div>

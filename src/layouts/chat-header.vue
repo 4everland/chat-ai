@@ -60,7 +60,8 @@ export default {
       return this.checkModelIds.length;
     },
     title() {
-      // if (this.path == "/") return this.chatMenu?.title;
+      if (this.path == "/" && !this.asPC) return "4EVERChat";
+      // return this.chatMenu?.title;
       if (this.path == "/settings") return "Settings";
       return "";
     },

@@ -104,18 +104,16 @@ import importBtn from "./import-btn.vue";
       >
       <import-btn />
     </div>
-    <div
-      v-if="apiKey"
-      class="bg-btn-1 al-c px-4 py-3"
-      @click="$router.push('/settings')"
-    >
-      <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="28" />
-      <img v-else src="/img/chat/avatar.svg" width="28" />
-      <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
-      <img class="ml-auto" src="/img/chat/settings.svg" width="22" />
-    </div>
-    <div class="px-4" v-if="apiKey">
-      <div style="border-top: 1px solid #e2e8f0"></div>
+    <div v-if="apiKey">
+      <div class="bg-btn-1 al-c px-4 py-3" @click="$router.push('/settings')">
+        <jazz-icon v-if="userInfo.uid" :hash="userInfo.uid" :size="28" />
+        <img v-else src="/img/chat/avatar.svg" width="28" />
+        <span class="ml-2">{{ userInfo.uname || "Visitor" }}</span>
+        <img class="ml-auto" src="/img/chat/settings.svg" width="22" />
+      </div>
+      <div class="px-4 bg-f1">
+        <div style="border-top: 1px solid #e2e8f0"></div>
+      </div>
     </div>
     <chat-menu-social />
   </div>
