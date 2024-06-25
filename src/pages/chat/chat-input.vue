@@ -72,7 +72,7 @@
       </template>
     </q-input>
   </div>
-  <div class="pa-1 mb-2 ta-c fz-14 text-info">
+  <div class="pa-1 mb-2 ta-c fz-12 text-info">
     4EVERChat can make mistakes. Check important info.
   </div>
   <div class="safe-btm"></div>
