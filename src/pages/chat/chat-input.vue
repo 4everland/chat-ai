@@ -72,17 +72,16 @@
         @blur="isFoucs = false"
       >
         <template #append>
-          <q-btn
-            class="scale-9"
-            round
-            dense
-            flat
+          <div
+            class="pa-2 hover-1"
             :disable="imgList.length >= 4"
             @click="$refs.upload.click()"
           >
-            <img src="/img/chat/paperclip.svg" width="22" />
-            <q-tooltip>Limit: 4 attachments per message.</q-tooltip>
-          </q-btn>
+            <img src="/img/chat/paperclip.svg" width="20" />
+            <q-tooltip :offset="[0, -10]"
+              >Limit: 4 attachments per message.</q-tooltip
+            >
+          </div>
           <q-btn
             class="send-btn mb-1"
             round
@@ -118,6 +117,7 @@
 </template>
 
 <script>
+import { compressImg } from "src/utils/compress";
 import { mapState } from "vuex";
 
 export default {
@@ -169,9 +169,11 @@ export default {
     onDel(i) {
       this.imgList.splice(i, 1);
     },
-    onUpload(e) {
+    async onUpload(e) {
       const files = e.target.files;
       for (const file of files) {
+        const img = await compressImg(file);
+        // console.log(img);
         const reader = new FileReader();
         reader.onload = (e) => {
           // console.log(e.target.result);
@@ -179,7 +181,7 @@ export default {
             src: e.target.result,
           });
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(img);
       }
     },
     async onClearChat() {
