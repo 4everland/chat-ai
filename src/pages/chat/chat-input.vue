@@ -226,7 +226,7 @@ export default {
           content.push({
             type: "image_url",
             image_url: {
-              detail: "row",
+              detail: "low",
               url: it.src,
             },
           });
