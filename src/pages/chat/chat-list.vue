@@ -13,7 +13,12 @@ import ChatEmpty from "./chat-empty.vue";
         :modelId="it.model"
         :logs="getLogs(it)"
       />
-      <msg-sent v-else :rowId="it.id" :modelId="it.model" :text="it.content" />
+      <msg-sent
+        v-else
+        :rowId="it.id"
+        :modelId="it.model"
+        :content="it.content"
+      />
     </template>
   </div>
 </template>
@@ -63,7 +68,7 @@ export default {
   },
   created() {
     this.$bus.on("send-msg", (msg) => {
-      console.log(msg);
+      // console.log(msg);
       this.onSendMsg(msg);
     });
   },
@@ -111,6 +116,10 @@ export default {
           createAt: Date.now(),
         },
       ];
+      if (!this.chatMenu.title) {
+        const title = typeof content == "string" ? content : content[0].text;
+        this.updateTitle(title);
+      }
       const jobModelIds = [];
       const isExpand = this.checkModels.length == 1;
       for (const row of this.checkModels) {
@@ -127,9 +136,7 @@ export default {
       if (chatLogs.length > 50) {
         //
       }
-      if (!this.chatMenu.title) {
-        this.updateTitle(content);
-      }
+
       this.$setStore({
         chatLogs,
       });

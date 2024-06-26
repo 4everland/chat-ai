@@ -177,12 +177,20 @@ export default {
         const reader = new FileReader();
         reader.onload = (e) => {
           // console.log(e.target.result);
+          let idx = this.imgList.findIndex((it) => it.src == e.target.result);
+          if (idx == -1 && this.imgList.length >= 4) {
+            idx = 0;
+          }
+          if (idx > -1) {
+            this.imgList.splice(idx, 1);
+          }
           this.imgList.push({
             src: e.target.result,
           });
         };
         reader.readAsDataURL(img);
       }
+      e.target.value = null;
     },
     async onClearChat() {
       // This will clean up your chat history. Unless you have exported the chat, this action is irreversible. Would you like to proceed?
@@ -211,8 +219,22 @@ export default {
       this.sendMsg();
     },
     sendMsg() {
-      this.$bus.emit("send-msg", this.trimVal);
+      let content = this.trimVal;
+      if (this.imgList.length) {
+        content = [{ type: "text", text: this.trimVal }];
+        this.imgList.forEach((it) => {
+          content.push({
+            type: "image_url",
+            image_url: {
+              detail: "row",
+              url: it.src,
+            },
+          });
+        });
+      }
+      this.$bus.emit("send-msg", content);
       this.inputVal = "";
+      this.imgList = [];
     },
   },
 };

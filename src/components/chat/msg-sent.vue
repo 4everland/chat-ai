@@ -16,6 +16,19 @@
           <div v-html="html"></div>
         </div>
       </div>
+      <div class="bg-left mt-1 bdrs-8 pa-2" v-if="imgs">
+        <div class="d-flex">
+          <div
+            :class="{
+              'ml-1': i > 0,
+            }"
+            v-for="(src, i) in imgs"
+            :key="i"
+          >
+            <img :src="src" height="100" />
+          </div>
+        </div>
+      </div>
       <div class="mt-1 gray hover-show al-c f-end">
         <div class="fz-12 al-c hover-1" @click="onCopyCode">
           <img src="/img/ic-code.svg" width="14" />
@@ -51,13 +64,25 @@ export default {
   props: {
     rowId: String,
     modelId: String,
-    text: String,
+    content: String,
   },
   computed: {
     ...mapState({
       userInfo: (s) => s.userInfo,
       apiKey: (s) => s.apiKey,
     }),
+    imgs() {
+      if (typeof this.content == "object") {
+        return this.content
+          .filter((it) => it.type == "image_url")
+          .map((it) => it.image_url.url);
+      }
+      return null;
+    },
+    text() {
+      if (this.imgs) return this.content[0].text;
+      return this.content;
+    },
     html() {
       return this.text.replace(/\n/g, "<br>");
     },
