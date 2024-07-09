@@ -257,10 +257,10 @@ export default {
     async getModels() {
       if (this.aiModels.length) {
         if (Date.now() - localStorage.t_ai_models < 3 * 3600e3)
-          return console.log("models", this.aiModels.length);
+          return //console.log("models", this.aiModels.length);
       }
       try {
-        console.log("get models");
+        // console.log("get models");
         this.loadingModel = true;
         const { data } = await this.$axios.get(
           "https://ai.api.4everland.org/api/v1/models"

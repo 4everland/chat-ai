@@ -34,7 +34,11 @@ export default {
       apiKey: (s) => s.apiKey,
     }),
     ...mapGetters(["chatMenu"]),
+    path() {
+      return this.$route.path;
+    },
     menuId() {
+      if (this.path != "/") return null;
       return this.chatMenu?.id;
     },
     checkModels() {
@@ -66,6 +70,7 @@ export default {
       console.log(msg);
       this.onSendMsg(msg);
     });
+    this.setLogs()
   },
   unmounted() {
     this.$bus.off("send-msg");
