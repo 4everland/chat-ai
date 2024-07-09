@@ -73,6 +73,7 @@
       >
         <template #append>
           <div
+            v-if="inDev"
             class="pa-2 hover-1"
             :disable="imgList.length >= 4"
             @click="$refs.upload.click()"
@@ -138,6 +139,9 @@ export default {
     }),
     trimVal() {
       return this.inputVal.trim();
+    },
+    inDev() {
+      return this.$inDev;
     },
   },
   watch: {
