@@ -1,3 +1,4 @@
+import MainLayout from "layouts/MainLayout.vue";
 import PageChat from "pages/chat/page-chat.vue";
 import PageLogin from "pages/page-login.vue";
 import PageSettings from "src/pages/settings/page-settings.vue";
@@ -5,7 +6,7 @@ import PageSettings from "src/pages/settings/page-settings.vue";
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    component: MainLayout,
     children: [
       { path: "", component: PageChat },
       {
