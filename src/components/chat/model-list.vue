@@ -60,7 +60,7 @@
                 dense
                 default-opened
                 :label="group.name"
-                :caption="group.num ? `${group.num} selected` : ''"
+                :caption="`Total ${group.subs.length}, Selected ${group.num}  `"
                 v-for="group in modelGroups"
                 :key="group.name"
               >
