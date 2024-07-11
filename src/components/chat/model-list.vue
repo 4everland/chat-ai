@@ -30,37 +30,57 @@
             transition-hide="jump-up"
             :offset="[50, 0]"
           >
-            <div class="pa-3 pb-0 tiny-input pos-s top-0 bg-white z-10">
-              <q-input
-                v-model="searchKey"
-                outlined
-                dense
-                placeholder="Search Models"
-              ></q-input>
-            </div>
-            <div class="pa-4 ta-c" v-if="!modelGroups.length">
-              <span class="fz-14 gray">No Results</span>
-            </div>
-            <q-list dense separator style="min-width: 160px">
-              <template v-for="group in modelGroups" :key="group.name">
-                <div class="gray fz-12 px-4 py-2 mt-3">
-                  {{ group.name }}
+            <div style="width: 300px">
+              <div class="pa-3 pb-0 tiny-input pos-s top-0 bg-white z-10">
+                <div class="al-c">
+                  <q-input
+                    class="flex-1"
+                    v-model="searchKey"
+                    outlined
+                    dense
+                    placeholder="Search Models"
+                  ></q-input>
+                  <q-btn
+                    class="ml-2"
+                    @click="toggleExpend"
+                    size="sm"
+                    icon="apps"
+                    flat
+                    round
+                  ></q-btn>
                 </div>
-                <q-item
-                  v-for="row in group.subs"
-                  :key="row.id"
-                  clickable
-                  :active="selected.includes(row.id)"
-                  active-class="bg-f1 gray-3-"
-                  @click="onSelect(row.id)"
-                >
-                  <q-item-section>
-                    <span class="py-1">{{ row.name }}</span>
-                  </q-item-section>
-                </q-item>
-                <q-separator />
-              </template>
-            </q-list>
+              </div>
+              <div class="pa-4 ta-c" v-if="!modelGroups.length">
+                <span class="fz-14 gray">No Results</span>
+              </div>
+
+              <q-expansion-item
+                v-model="expended[group.name]"
+                class="mt-2"
+                dense
+                default-opened
+                :label="group.name"
+                :caption="group.num ? `${group.num} selected` : ''"
+                v-for="group in modelGroups"
+                :key="group.name"
+              >
+                <q-list dense separator>
+                  <q-item
+                    v-for="row in group.subs"
+                    :key="row.id"
+                    clickable
+                    :active="selected.includes(row.id)"
+                    active-class="bg-f1 gray-3-"
+                    @click="onSelect(row.id)"
+                  >
+                    <q-item-section>
+                      <span class="py-1">{{ row.name }}</span>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+                <!-- <q-separator /> -->
+              </q-expansion-item>
+            </div>
           </q-menu>
         </q-btn>
 
@@ -131,6 +151,7 @@ export default {
       selected: [],
       checked: [],
       searchKey: "",
+      expended: [],
     };
   },
   computed: {
@@ -151,6 +172,9 @@ export default {
         if (!group) {
           group = { name: tokenizer, subs: [], num: 0 };
           groups.push(group);
+        }
+        if (this.selected.includes(row.id)) {
+          group.num += 1;
         }
         group.subs.push(row);
       }
@@ -195,6 +219,21 @@ export default {
     onClose() {
       this.$bus.emit("toggleMenu", "right");
     },
+    toggleExpend() {
+      let isAllClose = true;
+      for (const key in this.expended) {
+        if (this.expended[key]) {
+          isAllClose = false;
+          break;
+        }
+      }
+      const isOpen = isAllClose;
+      const expended = [];
+      for (const key in this.expended) {
+        expended[key] = isOpen;
+      }
+      this.expended = expended;
+    },
     async onInit() {
       const {
         selectedModels = [],
@@ -207,6 +246,11 @@ export default {
       this.selected = [...selectedModels];
       this.checked = [...checkedModels];
       await this.getModels();
+      const expended = [];
+      this.modelGroups.forEach((it) => {
+        expended[it.name] = true;
+      });
+      this.expended = expended;
       let model = this.initModel;
       if (model) {
         this.initModel = "";
@@ -256,8 +300,7 @@ export default {
     },
     async getModels() {
       if (this.aiModels.length) {
-        if (Date.now() - localStorage.t_ai_models < 3 * 3600e3)
-          return //console.log("models", this.aiModels.length);
+        if (Date.now() - localStorage.t_ai_models < 3 * 3600e3) return; //console.log("models", this.aiModels.length);
       }
       try {
         // console.log("get models");
