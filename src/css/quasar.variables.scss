@@ -85,3 +85,9 @@ $warning: #f2c037;
 .color-1 {
   color: $primary;
 }
+
+.q-expansion-item {
+  .q-item__label {
+    color: #475569;
+  }
+}

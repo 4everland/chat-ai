@@ -90,11 +90,10 @@ async function handleError(status, config, data) {
   let msg = data.msg || "Unknown error";
   // console.log(data);
   if (status == 401 || data.code == 401) {
-    // location.href = VITE_HOME_URL + "/quick-login?type=chat";
-    msg = "Your session has expired. Please sign in to continue.";
+    // msg = "Your session has expired. Please sign in to continue.";
     store.commit("logout");
-  }
-  if (!config.noTip) {
+    location.href = VITE_HOME_URL + "/quick-login?type=chat";
+  } else if (!config.noTip) {
     if (msg.length < 80) window.$toast(msg);
     else window.$alert(msg);
   }

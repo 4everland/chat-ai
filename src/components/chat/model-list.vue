@@ -59,12 +59,11 @@
                 class="mt-2"
                 dense
                 default-opened
-                :label="group.name"
-                :caption="`Total ${group.subs.length}, Selected ${group.num}  `"
+                :label="group.name + ` (${group.num}/${group.subs.length})`"
                 v-for="group in modelGroups"
                 :key="group.name"
               >
-                <q-list dense separator>
+                <q-list dense>
                   <q-item
                     v-for="row in group.subs"
                     :key="row.id"
