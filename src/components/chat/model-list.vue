@@ -260,7 +260,8 @@ export default {
         if (!isIn) model = "";
       }
       if (!this.selected.length && !model) {
-        model = "openai/gpt-3.5-turbo,openchat/openchat-7b:free"; // "4ever/auto"; //
+        // model = "openai/gpt-3.5-turbo,openchat/openchat-7b:free"; // "4ever/auto"; //
+        model = "openai/gpt-4o,deepseek/deepseek-r1";
       }
       const marr = model.split(",");
       for (const item of marr) {

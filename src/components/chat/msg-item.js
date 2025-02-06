@@ -21,7 +21,10 @@ export default {
         // msg = `Correct API Key required, get it in [Dashboard](${url})`;
         msg = `Please [sign in to start](${url}) the conversation.`;
       }
-      if (msg == "Balance not enough.") {
+      if (
+        msg == "Balance not enough." ||
+        msg.includes("Insufficient credits")
+      ) {
         const url = this.$getHomeUrl("/billing/deposit");
         msg = `Insufhcient LAND, please recharge LAND in [Dashboard](${url})`;
         // this.onRecharge();
@@ -70,6 +73,7 @@ export default {
         source.addEventListener("message", (e) => {
           try {
             const json = JSON.parse(e.data);
+            console.log(json);
             if (json.error) {
               this.onErr(json.error.message);
               return;
