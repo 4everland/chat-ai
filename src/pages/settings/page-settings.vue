@@ -60,6 +60,8 @@ export default {
     },
     links() {
       const notMyKey = !this.keyList.find((it) => it.key == this.apiKey);
+      const currentId = this.keyList.find((it) => it.key == this.apiKey)?.id;
+
       return [
         {
           label: "Deposit LAND",
@@ -69,7 +71,7 @@ export default {
           label: "Activities",
           href: notMyKey
             ? "/ai-rpc?tab=Keys"
-            : "/ai-rpc/key/autoGen/" + this.apiKey,
+            : "/ai-rpc/key/autoGen/" + currentId,
         },
         {
           label: "LLMs",
