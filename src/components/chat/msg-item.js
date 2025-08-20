@@ -26,7 +26,7 @@ export default {
         msg.includes("Insufficient credits")
       ) {
         const url = this.$getHomeUrl("/billing/deposit");
-        msg = `Insufhcient LAND, please recharge LAND in [Dashboard](${url})`;
+        msg = `Insufficient LAND, please recharge LAND in [Dashboard](${url})`;
         // this.onRecharge();
       }
       this.resMsg = msg;
